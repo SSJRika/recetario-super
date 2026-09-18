@@ -16,7 +16,7 @@
   }
   .hero h1{ color:#fff; font-size:28px; max-width:26ch; }
   .hero p{ color:#A9BAC1; margin-top:12px; font-size:14.5px; max-width:48ch; }
-  .hero .acciones{ margin-top:22px; display:flex; gap:12px; }
+  .hero .acciones{ margin-top:22px; display:flex; gap:12px; flex-wrap:wrap; }
   .hero .acciones .boton{ width:auto; }
   .hero-cifras{
     background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
@@ -70,6 +70,7 @@
       <p>Agrega productos y toca cualquiera para ver cuándo caduca.</p>
       <div class="acciones">
         <button class="boton boton-dorado" onclick="toggleForm()">+ Agregar producto</button>
+        <button class="boton boton-marino" style="width:auto;" onclick="abrirCamara()">📷 Tomar foto</button>
         <a class="boton boton-borde" href="/carrito" style="background:transparent;border-color:rgba(255,255,255,.3);color:#fff">Revisar carrito</a>
       </div>
     </div>
@@ -132,6 +133,29 @@
 
 </main>
 
+<div class="modal-fondo" id="camara-overlay">
+  <div class="modal-caja" style="width:340px;">
+    <h3 style="margin-bottom:10px;">Toma una foto del producto</h3>
+    <video id="video-camara" autoplay playsinline style="width:100%; border-radius:8px; background:#000; margin-bottom:12px;"></video>
+    <canvas id="canvas-camara" style="display:none;"></canvas>
+    <p id="camara-estado" style="color:var(--gris); font-size:13px; margin-bottom:12px;"></p>
+    <button class="boton boton-dorado boton-bloque" onclick="capturarFoto()" id="btn-capturar">Capturar</button>
+    <button class="boton boton-borde boton-bloque" onclick="cerrarCamara()">Cancelar</button>
+  </div>
+</div>
+
+<div class="modal-fondo" id="fecha-overlay">
+  <div class="modal-caja" style="width:300px;">
+    <div class="emoji-grande" id="fecha-emoji"></div>
+    <h3 id="fecha-nombre" style="margin-bottom:14px;"></h3>
+    <div class="campo">
+      <label style="display:block; font-size:13px; font-weight:500; margin-bottom:6px;">¿Cuándo caduca?</label>
+      <input type="date" id="fecha-input">
+    </div>
+    <button class="boton boton-dorado boton-bloque" onclick="guardarFechaProducto()">Guardar</button>
+  </div>
+</div>
+
 <div class="modal-fondo" id="modal-overlay">
   <div class="modal-caja">
     <div class="emoji-grande" id="modal-emoji"></div>
@@ -171,6 +195,8 @@
 <script>
 requireAuth();
 let currentItemId = null;
+let streamCamara = null;
+let itemIdPendienteFecha = null;
 
 async function loadHome() {
   const res = await apiFetch("/pantry/refri");
@@ -305,6 +331,96 @@ async function addProduct() {
     toggleForm();
     loadHome();
   }
+}
+
+async function abrirCamara() {
+  document.getElementById("camara-overlay").classList.add("activo");
+  document.getElementById("camara-estado").textContent = "";
+  try {
+    streamCamara = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+    document.getElementById("video-camara").srcObject = streamCamara;
+  } catch (err) {
+    document.getElementById("camara-estado").textContent = "No se pudo acceder a la cámara. Revisa los permisos del navegador.";
+  }
+}
+
+function cerrarCamara() {
+  if (streamCamara) {
+    streamCamara.getTracks().forEach(track => track.stop());
+    streamCamara = null;
+  }
+  document.getElementById("camara-overlay").classList.remove("activo");
+}
+
+async function capturarFoto() {
+  const video = document.getElementById("video-camara");
+  const canvas = document.getElementById("canvas-camara");
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  canvas.getContext("2d").drawImage(video, 0, 0);
+
+  const estado = document.getElementById("camara-estado");
+  estado.textContent = "Analizando foto...";
+  document.getElementById("btn-capturar").disabled = true;
+
+  canvas.toBlob(async (blob) => {
+    const formData = new FormData();
+    formData.append("file", blob, "foto.jpg");
+
+    const token = getToken();
+    const res = await fetch("/pantry/detectar-foto", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}` },
+      body: formData,
+    });
+
+    document.getElementById("btn-capturar").disabled = false;
+
+    if (res.ok) {
+      const data = await res.json();
+      cerrarCamara();
+
+      if (data.dias_vida_util) {
+        loadHome();
+        mostrarToast(`${data.emoji} "${data.nombre_detectado}" se agregó a tu refri — dura aprox. ${data.dias_vida_util} día(s)`);
+      } else {
+        itemIdPendienteFecha = data.id;
+        document.getElementById("fecha-emoji").textContent = data.emoji;
+        document.getElementById("fecha-nombre").textContent = `¿Cuándo caduca tu ${data.nombre_detectado}?`;
+        document.getElementById("fecha-input").value = "";
+        document.getElementById("fecha-overlay").classList.add("activo");
+      }
+    } else {
+      estado.textContent = "No se pudo identificar el producto. Intenta de nuevo.";
+    }
+  }, "image/jpeg", 0.9);
+}
+
+async function guardarFechaProducto() {
+  const fecha = document.getElementById("fecha-input").value;
+  if (!fecha || !itemIdPendienteFecha) return;
+
+  const res = await apiFetch(`/pantry/${itemIdPendienteFecha}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ fecha_caducidad_manual: fecha }),
+  });
+
+  document.getElementById("fecha-overlay").classList.remove("activo");
+  itemIdPendienteFecha = null;
+
+  if (res && res.ok) {
+    loadHome();
+    mostrarToast("Producto guardado con su fecha de caducidad");
+  }
+}
+
+function mostrarToast(mensaje) {
+  const toast = document.createElement("div");
+  toast.textContent = mensaje;
+  toast.style.cssText = "position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--marino); color:white; padding:14px 22px; border-radius:8px; box-shadow:var(--sombra); z-index:100; font-size:14px;";
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3500);
 }
 
 loadHome();
