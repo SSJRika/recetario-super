@@ -83,3 +83,19 @@ class NotificationOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+class ShoppingListItemCreate(BaseModel):
+    nombre_producto: str
+    cantidad_sugerida: Optional[float] = None
+    category_id: Optional[int] = None
+
+
+class ShoppingListItemOut(BaseModel):
+    id: int
+    nombre_producto: str
+    cantidad_sugerida: Optional[float]
+    origen: str
+    estado: str
+
+    class Config:
+        from_attributes = True

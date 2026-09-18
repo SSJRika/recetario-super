@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi perfil · Recetario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/estilos.css">
+<style>
+  .perfil-top{ display:flex; gap:18px; align-items:center; margin-bottom:22px; }
+  .avatar{
+    width:70px;height:70px;border-radius:10px;flex:none;
+    background:var(--marino); color:#fff; display:grid; place-items:center;
+    font-family:'Lora',serif; font-size:25px; font-weight:600;
+  }
+  .perfil-top h2{ font-size:22px; }
+  .correo{ color:var(--gris); font-size:14px; margin:3px 0 0; }
+</style>
+</head>
+<body>
+
+<header class="barra">
+  <div class="barra-in">
+    <a class="marca" href="/"><span class="marca-icono">R</span>Recetario</a>
+    <nav class="menu">
+      <a href="/">Home</a>
+      <a href="/carrito">Carrito</a>
+      <a class="activo" href="/perfil">Mi perfil</a>
+    </nav>
+    <div class="cuenta">
+      <button class="btn-salir" onclick="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+</header>
+
+<main class="lienzo">
+  <div class="encabezado">
+    <h1>Mi perfil</h1>
+    <p>Tus datos de cuenta.</p>
+  </div>
+
+  <div class="tarjeta" style="max-width:480px;">
+    <div class="perfil-top">
+      <div class="avatar" id="avatar-iniciales">–</div>
+      <div>
+        <h2 id="perfil-nombre">Cargando...</h2>
+        <p class="correo" id="perfil-correo"></p>
+      </div>
+    </div>
+
+    <button class="boton boton-marino boton-bloque" onclick="logout()">Cerrar sesión</button>
+  </div>
+</main>
+
+<script src="/static/js/auth.js"></script>
+<script>
+requireAuth();
+
+async function loadPerfil() {
+  const res = await apiFetch("/auth/me");
+  if (!res || !res.ok) return;
+  const user = await res.json();
+  document.getElementById("perfil-nombre").textContent = user.nombre;
+  document.getElementById("perfil-correo").textContent = user.email;
+  const iniciales = user.nombre.split(" ").map(p => p[0]).slice(0, 2).join("").toUpperCase();
+  document.getElementById("avatar-iniciales").textContent = iniciales;
+}
+
+loadPerfil();
+</script>
+</body>
+</html>

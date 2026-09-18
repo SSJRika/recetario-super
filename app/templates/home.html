@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Home · Recetario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/estilos.css">
+<style>
+  .hero{
+    background:var(--marino); color:#DCE6EA; border-radius:var(--radio);
+    padding:38px 34px; margin-bottom:26px; display:grid;
+    grid-template-columns:1.4fr 1fr; gap:30px; align-items:center;
+  }
+  .hero h1{ color:#fff; font-size:28px; max-width:26ch; }
+  .hero p{ color:#A9BAC1; margin-top:12px; font-size:14.5px; max-width:48ch; }
+  .hero .acciones{ margin-top:22px; display:flex; gap:12px; }
+  .hero .acciones .boton{ width:auto; }
+  .hero-cifras{
+    background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
+    border-radius:var(--radio); padding:20px; display:grid;
+    grid-template-columns:1fr 1fr 1fr; gap:16px;
+  }
+  .hero-cifras div{ text-align:left; }
+  .hero-cifras b{ display:block; font-family:'Lora',serif; font-size:27px; color:#fff; }
+  .hero-cifras small{ color:#9FB2B9; font-size:12.5px; }
+
+  .accesos{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:26px; }
+  .acceso{ background:var(--papel); border:1px solid var(--linea); border-radius:var(--radio); padding:20px; text-decoration:none; color:var(--tinta); }
+  .acceso:hover{ border-color:var(--linea-2); box-shadow:var(--sombra); }
+  .acceso .marca-mini{
+    width:34px;height:34px;border-radius:7px;background:var(--fondo);
+    display:grid;place-items:center;margin-bottom:14px;font-size:15px;color:var(--marino);
+    border:1px solid var(--linea);
+  }
+  .acceso h3{ font-size:16.5px; margin-bottom:6px; }
+  .acceso p{ color:var(--gris); font-size:13.5px; }
+
+  .seccion-doble{ display:grid; grid-template-columns:1.4fr 1fr; gap:20px; }
+  .aviso-lista{ list-style:none; margin:0; padding:0; }
+  .aviso-lista li{ display:flex; justify-content:space-between; align-items:baseline; padding:12px 0; border-bottom:1px solid var(--linea); font-size:14px; }
+  .aviso-lista li:last-child{ border-bottom:0; }
+  .aviso-lista li span.nombre{ font-weight:500; }
+  .aviso-lista li span.plazo{ color:var(--terracota); font-size:13px; font-weight:600; }
+</style>
+</head>
+<body>
+
+<header class="barra">
+  <div class="barra-in">
+    <a class="marca" href="/"><span class="marca-icono">R</span>Recetario</a>
+    <nav class="menu">
+      <a class="activo" href="/">Home</a>
+      <a href="/carrito">Carrito</a>
+      <a href="/perfil">Mi perfil</a>
+    </nav>
+    <div class="cuenta">
+      <button class="btn-salir" onclick="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+</header>
+
+<main class="lienzo">
+
+  <section class="hero">
+    <div>
+      <h1 id="hero-titulo">Hola. Aquí está el estado de tu despensa.</h1>
+      <p>Agrega productos y toca cualquiera para ver cuándo caduca.</p>
+      <div class="acciones">
+        <button class="boton boton-dorado" onclick="toggleForm()">+ Agregar producto</button>
+        <a class="boton boton-borde" href="/carrito" style="background:transparent;border-color:rgba(255,255,255,.3);color:#fff">Revisar carrito</a>
+      </div>
+    </div>
+    <div class="hero-cifras">
+      <div><b id="cif-productos">–</b><small>productos en tu refri</small></div>
+      <div><b id="cif-caducar">–</b><small>por caducar esta semana</small></div>
+      <div><b id="cif-carrito">–</b><small>artículos en el carrito</small></div>
+    </div>
+  </section>
+
+  <div class="accesos">
+    <a class="acceso" href="/carrito">
+      <span class="marca-mini">01</span>
+      <h3>Carrito</h3>
+      <p>Revisa y ajusta lo que te falta comprar.</p>
+    </a>
+    <a class="acceso" href="/perfil">
+      <span class="marca-mini">02</span>
+      <h3>Mi perfil</h3>
+      <p>Consulta tus datos y cierra sesión.</p>
+    </a>
+  </div>
+
+  <div class="seccion-doble">
+    <section class="tarjeta">
+      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:16px;">
+        <h2 style="font-size:18px">Tu refri virtual</h2>
+      </div>
+
+      <div id="add-form" class="oculto" style="margin-bottom:18px; padding:16px; background:var(--fondo); border-radius:6px;">
+        <div class="campo"><input type="text" id="nombre-prod" placeholder="Nombre del producto"></div>
+        <div class="campo"><input type="number" id="cantidad-prod" placeholder="Cantidad" value="1"></div>
+        <div class="campo">
+  <select id="unidad-prod" style="width:100%; padding:11px 13px; border:1px solid var(--linea-2); border-radius:6px; font-family:inherit; font-size:14.5px; background:#FBFDFC; color:var(--tinta);">
+    <option value="">Selecciona unidad</option>
+    <option value="pieza">Pieza(s)</option>
+    <option value="paquete">Paquete(s)</option>
+    <option value="kg">Kilogramo(s)</option>
+    <option value="g">Gramo(s)</option>
+    <option value="litro">Litro(s)</option>
+    <option value="ml">Mililitro(s)</option>
+  </select>
+</div>
+        <div class="campo"><input type="date" id="fecha-prod"></div>
+        <button class="boton boton-marino boton-bloque" onclick="addProduct()">Guardar</button>
+      </div>
+
+      <div class="refri" id="refri-container">
+        <p style="color:var(--gris-claro); text-align:center;">Cargando tu refri...</p>
+      </div>
+    </section>
+
+    <aside class="tarjeta">
+      <h2 style="font-size:17px;margin-bottom:14px">Por caducar esta semana</h2>
+      <ul class="aviso-lista" id="lista-caducar">
+        <li><span class="nombre" style="color:var(--gris-claro)">Cargando...</span></li>
+      </ul>
+    </aside>
+  </div>
+
+</main>
+
+<div class="modal-fondo" id="modal-overlay">
+  <div class="modal-caja">
+    <div class="emoji-grande" id="modal-emoji"></div>
+    <h3 id="modal-nombre"></h3>
+    <p id="modal-mensaje"></p>
+    <span class="distintivo" id="modal-badge" style="margin-bottom:16px; display:inline-block;"></span>
+    <button class="boton boton-dorado boton-bloque" onclick="marcarAgotado()">Se me acabó</button>
+    <button class="boton boton-borde boton-bloque" onclick="closeModal()">Cerrar</button>
+  </div>
+</div>
+
+<footer class="pie-sitio">
+  <div class="pie-in">
+    <div>
+      <div class="pie-marca"><span class="marca-icono">R</span>Recetario</div>
+      <p>Tu despensa, tus fechas de caducidad y tu carrito, en un solo lugar.</p>
+    </div>
+    <div class="pie-col">
+      <h4>Navegación</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/carrito">Carrito</a></li>
+        <li><a href="/perfil">Mi perfil</a></li>
+      </ul>
+    </div>
+    <div class="pie-col">
+      <h4>Cuenta</h4>
+      <ul>
+        <li><a href="/perfil">Mi perfil</a></li>
+        <li><a href="#" onclick="logout()">Cerrar sesión</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script src="/static/js/auth.js"></script>
+<script>
+requireAuth();
+let currentItemId = null;
+
+async function loadHome() {
+  const res = await apiFetch("/pantry/refri");
+  if (!res) return;
+  const items = await res.json();
+
+  document.getElementById("cif-productos").textContent = items.length;
+  const porCaducar = items.filter(i => i.dias_restantes !== null && i.dias_restantes <= 7 && i.dias_restantes >= 0);
+  document.getElementById("cif-caducar").textContent = porCaducar.length;
+
+  renderRefri(items);
+  renderCaducar(porCaducar);
+
+  const resCarrito = await apiFetch("/shopping-list/");
+  if (resCarrito) {
+    const carrito = await resCarrito.json();
+    document.getElementById("cif-carrito").textContent = carrito.filter(i => i.estado === "pendiente").length;
+  }
+}
+
+function renderRefri(items) {
+  const container = document.getElementById("refri-container");
+  if (items.length === 0) {
+    container.innerHTML = "<div class='refri-vacio'>🧊<br>Tu refri está vacío.<br>Agrega tu primer producto.</div>";
+    return;
+  }
+  container.innerHTML = "";
+  const fila = document.createElement("div");
+  fila.className = "refri-fila";
+
+  items.forEach(item => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "refri-item";
+    wrapper.onclick = () => openModal(item);
+
+    const icon = document.createElement("div");
+    icon.className = "refri-icono " + (item.estado_visual === "expiring" ? "por-caducar" : item.estado_visual === "expired" ? "caducado" : "");
+    icon.textContent = item.emoji;
+
+    const label = document.createElement("div");
+    label.className = "refri-etiqueta";
+    label.textContent = item.nombre;
+
+    wrapper.appendChild(icon);
+    wrapper.appendChild(label);
+    fila.appendChild(wrapper);
+  });
+
+  container.appendChild(fila);
+}
+
+function renderCaducar(items) {
+  const lista = document.getElementById("lista-caducar");
+  if (items.length === 0) {
+    lista.innerHTML = "<li><span class='nombre' style='color:var(--gris-claro)'>Nada por caducar pronto</span></li>";
+    return;
+  }
+  lista.innerHTML = "";
+  items.forEach(item => {
+    const li = document.createElement("li");
+    const plazo = item.dias_restantes === 0 ? "Hoy" : item.dias_restantes + " día(s)";
+    li.innerHTML = `<span class="nombre">${item.nombre}</span><span class="plazo">${plazo}</span>`;
+    lista.appendChild(li);
+  });
+}
+
+function openModal(item) {
+  currentItemId = item.id;
+  document.getElementById("modal-emoji").textContent = item.emoji;
+  document.getElementById("modal-nombre").textContent = item.nombre + " (" + item.cantidad + " " + item.unidad + ")";
+
+  let mensaje = "Sin fecha de caducidad registrada.";
+  let badgeClass = "d-salvia", badgeText = "Fresco";
+
+  if (item.dias_restantes !== null) {
+    if (item.dias_restantes < 0) {
+      mensaje = "Caducó hace " + Math.abs(item.dias_restantes) + " día(s).";
+      badgeClass = "d-terracota"; badgeText = "Caducado";
+    } else if (item.dias_restantes === 0) {
+      mensaje = "Caduca hoy."; badgeClass = "d-dorado"; badgeText = "Por caducar";
+    } else if (item.dias_restantes <= 3) {
+      mensaje = "Faltan " + item.dias_restantes + " día(s) para que caduque.";
+      badgeClass = "d-dorado"; badgeText = "Por caducar";
+    } else {
+      mensaje = "Caduca el " + item.fecha_caducidad + ".";
+    }
+  }
+
+  document.getElementById("modal-mensaje").textContent = mensaje;
+  const badge = document.getElementById("modal-badge");
+  badge.textContent = badgeText;
+  badge.className = "distintivo " + badgeClass;
+
+  document.getElementById("modal-overlay").classList.add("activo");
+}
+
+function closeModal() {
+  document.getElementById("modal-overlay").classList.remove("activo");
+  currentItemId = null;
+}
+
+async function marcarAgotado() {
+  if (!currentItemId) return;
+  const res = await apiFetch(`/pantry/${currentItemId}/agotar`, { method: "POST" });
+  if (res && res.ok) { closeModal(); loadHome(); }
+}
+
+function toggleForm() {
+  const form = document.getElementById("add-form");
+  form.classList.toggle("oculto");
+}
+
+async function addProduct() {
+  const nombre_detectado = document.getElementById("nombre-prod").value;
+  const cantidad = parseFloat(document.getElementById("cantidad-prod").value);
+  const unidad = document.getElementById("unidad-prod").value;
+  const fecha_caducidad_manual = document.getElementById("fecha-prod").value || null;
+
+  if (!nombre_detectado || !unidad) { alert("Falta nombre o unidad"); return; }
+
+  const res = await apiFetch("/pantry/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nombre_detectado, cantidad, unidad, fecha_caducidad_manual }),
+  });
+
+  if (res && res.ok) {
+    document.getElementById("nombre-prod").value = "";
+    document.getElementById("cantidad-prod").value = "1";
+    document.getElementById("unidad-prod").value = "";
+    document.getElementById("fecha-prod").value = "";
+    toggleForm();
+    loadHome();
+  }
+}
+
+loadHome();
+</script>
+</body>
+</html>

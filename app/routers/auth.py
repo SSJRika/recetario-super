@@ -1,6 +1,7 @@
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlmodel import Session, select
+from app.dependencies import get_current_user
 
 from app.database import get_session
 from app.models import User
@@ -40,3 +41,6 @@ def login(
 
     token = create_access_token(data={"sub": str(user.id)})
     return Token(access_token=token)
+@router.get("/me", response_model=UserOut)
+def me(current_user: User = Depends(get_current_user)):
+    return current_user

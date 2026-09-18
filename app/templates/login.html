@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iniciar sesión · Recetario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/estilos.css">
+<style>
+  body{ min-height:100vh; display:flex; flex-direction:column; }
+  .barra-simple{ background:var(--marino); border-bottom:1px solid rgba(255,255,255,.06); }
+  .barra-simple .barra-in{ max-width:1080px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; }
+  .zona{ flex:1; display:flex; align-items:center; justify-content:center; padding:50px 24px; }
+  .panel{
+    width:100%; max-width:960px; display:grid; grid-template-columns:1.05fr 1fr;
+    background:var(--papel); border:1px solid var(--linea); border-radius:var(--radio);
+    overflow:hidden; box-shadow:var(--sombra);
+  }
+  .presentacion{ background:var(--marino); color:#E7F3EA; padding:44px 38px; display:flex; flex-direction:column; justify-content:space-between; }
+  .presentacion h1{ color:#fff; font-size:26px; max-width:19ch; }
+  .presentacion p{ color:#BFDBC9; margin-top:14px; font-size:14.5px; max-width:34ch; }
+  .lista-beneficios{ list-style:none; margin:26px 0 0; padding:0; display:flex; flex-direction:column; gap:14px; }
+  .lista-beneficios li{ display:flex; gap:11px; align-items:flex-start; font-size:13.5px; color:#D6ECDD; }
+  .lista-beneficios li .marca-check{
+    width:20px; height:20px; border-radius:5px; flex:none; margin-top:1px;
+    background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.22);
+    display:grid; place-items:center; font-size:11px; color:#fff;
+  }
+  .formularios{ padding:40px 40px 34px; }
+  .pestanas{ display:flex; background:var(--fondo); border-radius:7px; padding:4px; margin-bottom:24px; }
+  .pestanas button{
+    flex:1; padding:10px; border:0; background:transparent; border-radius:5px;
+    font-family:inherit; font-size:14px; font-weight:600; color:var(--gris); cursor:pointer;
+  }
+  .pestanas button[aria-selected="true"]{ background:var(--papel); color:var(--tinta); box-shadow:0 1px 3px rgba(30,43,35,.12); }
+  .formularios h2{ font-size:20px; }
+  .sub{ color:var(--gris); font-size:13.5px; margin:6px 0 20px; }
+  .oculto{ display:none; }
+  @media (max-width:760px){
+    .panel{ grid-template-columns:1fr; }
+    .presentacion{ display:none; }
+    .zona{ padding:30px 18px; }
+    .formularios{ padding:32px 26px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="barra-simple">
+  <div class="barra-in">
+    <a class="marca" href="/login"><span class="marca-icono">R</span>Recetario</a>
+  </div>
+</header>
+
+<div class="zona">
+  <div class="panel">
+
+    <div class="presentacion">
+      <div>
+        <h1>Cocina con lo que ya tienes en casa</h1>
+        <p>Registra tu despensa, entérate qué está por caducar, y descubre qué puedes preparar hoy.</p>
+        <ul class="lista-beneficios">
+          <li><span class="marca-check">✓</span>Tu refri virtual, siempre actualizado.</li>
+          <li><span class="marca-check">✓</span>Avisos de lo que está por caducar.</li>
+          <li><span class="marca-check">✓</span>Un carrito que solo agrega lo que te falta.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formularios">
+      <div class="pestanas" role="tablist">
+        <button role="tab" aria-selected="true" id="tab-entrar" onclick="cambiar('entrar')">Iniciar sesión</button>
+        <button role="tab" aria-selected="false" id="tab-crear" onclick="cambiar('crear')">Crear cuenta</button>
+      </div>
+
+      <div id="panel-entrar">
+        <h2>Entra a tu cocina</h2>
+        <p class="sub">Tu despensa te sigue en cualquier dispositivo.</p>
+        <div class="error-caja oculto" id="error-entrar"></div>
+
+        <div class="campo">
+          <label for="correo">Correo</label>
+          <input type="email" id="correo" placeholder="tu@correo.com">
+        </div>
+        <div class="campo">
+          <label for="clave">Contraseña</label>
+          <input type="password" id="clave" placeholder="••••••••">
+        </div>
+
+        <button class="boton boton-marino boton-bloque" onclick="login()">Iniciar sesión</button>
+      </div>
+
+      <div id="panel-crear" class="oculto">
+        <h2>Crea tu cuenta</h2>
+        <p class="sub">Empieza a registrar tu despensa.</p>
+        <div class="error-caja oculto" id="error-crear"></div>
+
+        <div class="campo">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" placeholder="Tu nombre">
+        </div>
+        <div class="campo">
+          <label for="correo2">Correo</label>
+          <input type="email" id="correo2" placeholder="tu@correo.com">
+        </div>
+        <div class="campo">
+          <label for="clave2">Contraseña</label>
+          <input type="password" id="clave2" placeholder="Mínimo 6 caracteres">
+        </div>
+
+        <button class="boton boton-marino boton-bloque" onclick="registrar()">Crear cuenta</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="/static/js/auth.js"></script>
+<script>
+function cambiar(cual){
+  var entrar = cual === 'entrar';
+  document.getElementById('panel-entrar').classList.toggle('oculto', !entrar);
+  document.getElementById('panel-crear').classList.toggle('oculto', entrar);
+  document.getElementById('tab-entrar').setAttribute('aria-selected', entrar);
+  document.getElementById('tab-crear').setAttribute('aria-selected', !entrar);
+}
+
+async function login(){
+  const email = document.getElementById("correo").value;
+  const password = document.getElementById("clave").value;
+  const errorEl = document.getElementById("error-entrar");
+
+  const body = new URLSearchParams();
+  body.append("username", email);
+  body.append("password", password);
+
+  const res = await fetch("/auth/login", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: body,
+  });
+
+  if (res.ok) {
+    const data = await res.json();
+    saveToken(data.access_token);
+    window.location.href = "/";
+  } else {
+    errorEl.textContent = "Correo o contraseña incorrectos";
+    errorEl.classList.remove("oculto");
+  }
+}
+
+async function registrar(){
+  const nombre = document.getElementById("nombre").value;
+  const email = document.getElementById("correo2").value;
+  const password = document.getElementById("clave2").value;
+  const errorEl = document.getElementById("error-crear");
+
+  const res = await fetch("/auth/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nombre, email, password }),
+  });
+
+  if (res.ok) {
+    cambiar('entrar');
+    document.getElementById("correo").value = email;
+  } else {
+    const data = await res.json();
+    errorEl.textContent = data.detail || "Error al registrarte";
+    errorEl.classList.remove("oculto");
+  }
+}
+</script>
+</body>

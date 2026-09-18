@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carrito · Recetario</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/estilos.css">
+<style>
+  .titulo-lista{ display:flex; align-items:baseline; justify-content:space-between; }
+  .titulo-lista h2{ font-size:18px; }
+  .titulo-lista span{ color:var(--gris); font-size:13.5px; }
+</style>
+</head>
+<body>
+
+<header class="barra">
+  <div class="barra-in">
+    <a class="marca" href="/"><span class="marca-icono">R</span>Recetario</a>
+    <nav class="menu">
+      <a href="/">Home</a>
+      <a class="activo" href="/carrito">Carrito</a>
+      <a href="/perfil">Mi perfil</a>
+    </nav>
+    <div class="cuenta">
+      <button class="btn-salir" onclick="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+</header>
+
+<main class="lienzo">
+
+  <div class="encabezado">
+    <h1>Tu carrito</h1>
+    <p>Lo que necesitas comprar en tu próxima ida al súper.</p>
+  </div>
+
+  <div class="tarjeta" style="max-width:640px;">
+    <div class="titulo-lista">
+      <h2>Lista de compra</h2>
+      <span id="contador-items">0 productos</span>
+    </div>
+
+    <div style="display:flex; gap:8px; margin:18px 0;">
+      <input type="text" id="nuevo-producto" placeholder="Agregar producto" style="flex:1;">
+      <button class="boton boton-marino" style="width:auto;" onclick="addManual()">Agregar</button>
+    </div>
+
+    <div id="carrito-container">
+      <p style="color:var(--gris-claro); padding:16px 0;">Cargando tu carrito...</p>
+    </div>
+  </div>
+
+</main>
+
+<script src="/static/js/auth.js"></script>
+<script>
+requireAuth();
+
+async function loadCarrito() {
+  const res = await apiFetch("/shopping-list/");
+  if (!res) return;
+  const items = await res.json();
+  const pendientes = items.filter(i => i.estado === "pendiente");
+  const container = document.getElementById("carrito-container");
+  document.getElementById("contador-items").textContent = pendientes.length + " producto" + (pendientes.length === 1 ? "" : "s");
+
+  if (pendientes.length === 0) {
+    container.innerHTML = "<p style='color:var(--gris-claro); padding:16px 0;'>Tu carrito está vacío.</p>";
+    return;
+  }
+
+  container.innerHTML = "";
+  pendientes.forEach(item => {
+    const row = document.createElement("div");
+    row.className = "item-carrito";
+
+    const left = document.createElement("span");
+    left.className = "nombre-carrito";
+    left.textContent = item.nombre_producto + (item.cantidad_sugerida ? ` x${item.cantidad_sugerida}` : "");
+
+    const right = document.createElement("div");
+    right.className = "acciones-carrito";
+
+    const buyBtn = document.createElement("button");
+    buyBtn.textContent = "Comprado";
+    buyBtn.className = "boton boton-dorado";
+    buyBtn.onclick = () => marcarComprado(item.id);
+
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "Quitar";
+    delBtn.className = "boton boton-borde";
+    delBtn.onclick = () => eliminarItem(item.id);
+
+    right.appendChild(buyBtn);
+    right.appendChild(delBtn);
+    row.appendChild(left);
+    row.appendChild(right);
+    container.appendChild(row);
+  });
+}
+
+async function addManual() {
+  const nombre = document.getElementById("nuevo-producto").value;
+  if (!nombre) return;
+  const res = await apiFetch("/shopping-list/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ nombre_producto: nombre }),
+  });
+  if (res && res.ok) {
+    document.getElementById("nuevo-producto").value = "";
+    loadCarrito();
+  }
+}
+
+async function marcarComprado(id) {
+  const res = await apiFetch(`/shopping-list/${id}/comprado`, { method: "PATCH" });
+  if (res && res.ok) loadCarrito();
+}
+
+async function eliminarItem(id) {
+  const res = await apiFetch(`/shopping-list/${id}`, { method: "DELETE" });
+  if (res && res.ok) loadCarrito();
+}
+
+loadCarrito();
+</script>
+</body>
+</html>

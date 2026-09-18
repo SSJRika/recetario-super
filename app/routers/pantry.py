@@ -1,17 +1,16 @@
 from typing import List
+from datetime import date, timedelta
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
 from app.database import get_session
-from app.models import PantryItem, User
+from app.models import PantryItem, User, ProductCategory, ShoppingListItem
 from app.schemas import PantryItemCreate, PantryItemUpdate, PantryItemOut
 from app.dependencies import get_current_user
+from app.utils_emoji import get_emoji
 
 router = APIRouter(prefix="/pantry", tags=["pantry"])
 
-
-from datetime import date, timedelta
-from app.models import ProductCategory
 
 @router.post("/", response_model=PantryItemOut)
 def create_item(
@@ -50,6 +49,45 @@ def list_items(
         select(PantryItem).where(PantryItem.user_id == current_user.id)
     ).all()
     return items
+
+
+@router.get("/refri")
+def get_refri(
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    items = session.exec(
+        select(PantryItem).where(
+            PantryItem.user_id == current_user.id,
+            PantryItem.estado == "activo",
+        )
+    ).all()
+
+    resultado = []
+    for item in items:
+        fecha_relevante = item.fecha_caducidad_manual or item.fecha_caducidad_estimada
+        estado_visual = "fresh"
+        dias_restantes = None
+
+        if fecha_relevante:
+            dias_restantes = (fecha_relevante - date.today()).days
+            if dias_restantes < 0:
+                estado_visual = "expired"
+            elif dias_restantes <= 3:
+                estado_visual = "expiring"
+
+        resultado.append({
+            "id": item.id,
+            "nombre": item.nombre_detectado,
+            "emoji": get_emoji(item.nombre_detectado),
+            "cantidad": item.cantidad,
+            "unidad": item.unidad,
+            "estado_visual": estado_visual,
+            "dias_restantes": dias_restantes,
+            "fecha_caducidad": fecha_relevante.isoformat() if fecha_relevante else None,
+        })
+
+    return resultado
 
 
 @router.get("/{item_id}", response_model=PantryItemOut)
@@ -98,3 +136,28 @@ def delete_item(
     session.delete(item)
     session.commit()
     return {"detail": "Producto eliminado"}
+
+
+@router.post("/{item_id}/agotar")
+def marcar_agotado(
+    item_id: int,
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    item = session.get(PantryItem, item_id)
+    if not item or item.user_id != current_user.id:
+        raise HTTPException(status_code=404, detail="Producto no encontrado")
+
+    item.estado = "consumido"
+    session.add(item)
+
+    carrito_item = ShoppingListItem(
+        user_id=current_user.id,
+        nombre_producto=item.nombre_detectado,
+        category_id=item.category_id,
+        origen="agotado",
+    )
+    session.add(carrito_item)
+
+    session.commit()
+    return {"detail": f"{item.nombre_detectado} marcado como agotado y agregado al carrito"}
