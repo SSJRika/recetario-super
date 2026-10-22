@@ -1,0 +1,458 @@
+
+.barra,
+
+.barra-simple,
+
+.barra-landing {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
+
+    width: 100%;
+
+    background:
+
+        rgba(40, 102, 75, .97);
+
+    border-bottom:
+
+        1px solid
+
+        rgba(255, 255, 255, .12);
+
+    box-shadow:
+
+        0 5px 22px
+
+        rgba(33, 80, 59, .10);
+
+    backdrop-filter:
+
+        blur(12px);
+
+}
+
+.barra-in,
+
+.barra-landing .barra-in {
+
+    width: 100%;
+
+    max-width: 1400px;
+
+    min-height: 76px;
+
+    margin: 0 auto;
+
+    padding:
+
+        0 22px 0 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+}
+
+/* ============================================================
+
+   5. NAVEGACIÓN
+
+============================================================ */
+
+.nav-iconos {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+}
+
+.nav-icono {
+
+    min-height: 43px;
+
+    padding:
+
+        0 12px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    border-radius: 9px;
+
+    color: #DDF2E6;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition:
+
+        background .2s ease,
+
+        color .2s ease,
+
+        transform .2s ease;
+
+}
+
+.nav-icono svg {
+
+    width: 18px;
+
+    height: 18px;
+
+    flex: none;
+
+}
+
+.nav-icono:hover {
+
+    background:
+
+        rgba(255, 255, 255, .11);
+
+    color: var(--blanco);
+
+    transform:
+
+        translateY(-1px);
+
+}
+
+.nav-icono.activo {
+
+    background:
+
+        rgba(255, 255, 255, .14);
+
+    color: var(--blanco);
+
+}
+
+/* ============================================================
+
+   6. LOGO / MARCA
+
+============================================================ */
+
+.marca,
+
+.marca-derecha {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    color: var(--blanco);
+
+    font-family:
+
+        'Lora',
+
+        Georgia,
+
+        serif;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+}
+
+.marca {
+
+    font-size: 19px;
+
+}
+
+.marca-derecha {
+
+    margin-left: auto;
+
+    font-size: 25px;
+
+    letter-spacing: -.4px;
+
+}
+
+.marca-icono {
+
+    width: 39px;
+
+    height: 39px;
+
+    flex: none;
+
+    display: grid;
+
+    place-items: center;
+
+    background:
+
+        #91D2AB;
+
+    border-radius: 10px;
+
+    color:
+
+        var(--verde-900);
+
+    box-shadow:
+
+        0 5px 15px
+
+        rgba(19, 65, 45, .12);
+
+}
+
+.marca-icono svg {
+
+    width: 23px;
+
+    height: 23px;
+
+}
+
+
+
+.menu {
+
+    display: flex;
+
+    align-items: center;
+
+    align-self: stretch;
+
+    gap: 2px;
+
+}
+
+.menu a {
+
+    min-height: 45px;
+
+    padding:
+
+        0 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 8px;
+
+    color: #DDF2E6;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition:
+
+        .2s ease;
+
+}
+
+.menu a:hover {
+
+    background:
+
+        rgba(255,255,255,.09);
+
+    color: white;
+
+}
+
+.menu a.activo {
+
+    background:
+
+        rgba(255,255,255,.13);
+
+    color: white;
+
+}
+
+/* ============================================================
+
+   8. CUENTA / CERRAR SESIÓN
+
+============================================================ */
+
+.cuenta {
+
+    margin-left: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+}
+
+.btn-salir {
+
+    min-height: 39px;
+
+    padding:
+
+        8px 14px;
+
+    border:
+
+        1px solid
+
+        rgba(255,255,255,.27);
+
+    border-radius: 8px;
+
+    background:
+
+        transparent;
+
+    color: white;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition:
+
+        background .2s ease,
+
+        transform .2s ease;
+
+}
+
+.btn-salir:hover {
+
+    background:
+
+        rgba(255,255,255,.10);
+
+    transform:
+
+        translateY(-1px);
+
+}
+
+/* ============================================================
+
+   14. BOTÓN VOLVER A INICIO
+
+============================================================ */
+
+.volver-inicio {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    min-height: 40px;
+
+    padding:
+
+        8px 14px;
+
+    border:
+
+        1px solid
+
+        rgba(255,255,255,.22);
+
+    border-radius: 9px;
+
+    color:
+
+        #E3F5EA;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+
+        background .2s ease,
+
+        transform .2s ease;
+
+}
+
+.volver-inicio svg {
+
+    width: 18px;
+
+    height: 18px;
+
+}
+
+.volver-inicio:hover {
+
+    background:
+
+        rgba(255,255,255,.11);
+
+    color:
+
+        white;
+
+    transform:
+
+        translateY(-1px);
+
+}
+
+
+.barra .menu a,
+.barra-simple .menu a,
+.barra-landing .menu a {
+    background: transparent;
+    color: #DDF2E6;
+    font-weight: 500;
+}
+
+.barra .menu a:hover,
+.barra-simple .menu a:hover,
+.barra-landing .menu a:hover {
+    background: rgba(255, 255, 255, .09);
+    color: #FFFFFF;
+}
+
+.barra .menu a.activo,
+.barra-simple .menu a.activo,
+.barra-landing .menu a.activo {
+    background: rgba(255, 255, 255, .18);
+    color: #FFFFFF;
+    font-weight: 700;
+}

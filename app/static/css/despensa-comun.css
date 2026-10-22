@@ -1,0 +1,125 @@
+/* ============================================================
+
+   15. REFRIGERADOR / DESPENSA
+
+============================================================ */
+
+.refri {
+
+    padding: 22px;
+
+    background:
+
+        rgba(217,240,226,.78);
+
+    border:
+
+        1px solid
+
+        var(--verde-200);
+
+    border-radius:
+
+        14px;
+
+}
+
+.refri-fila {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 16px;
+
+    padding:
+
+        15px 0;
+
+    border-bottom:
+
+        1px dashed
+
+        var(--verde-200);
+
+}
+
+.refri-fila:last-child {
+
+    border-bottom: 0;
+
+}
+
+.refri-item {
+
+    width: 78px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 7px;
+
+    cursor: pointer;
+
+}
+
+.refri-icono {
+
+    width: 62px;
+
+    height: 62px;
+
+    display: grid;
+
+    place-items: center;
+
+    background:
+
+        rgba(255,255,255,.91);
+
+    border:
+
+        1px solid
+
+        var(--verde-200);
+
+    border-radius: 12px;
+
+    font-size: 27px;
+
+    transition:
+
+        transform .2s ease,
+
+        box-shadow .2s ease;
+
+}
+
+.refri-item:hover
+
+.refri-icono {
+
+    transform:
+
+        translateY(-4px);
+
+    box-shadow:
+
+        var(--sombra-suave);
+
+}
+
+.refri-etiqueta {
+
+    color:
+
+        var(--texto-suave);
+
+    font-size: 10px;
+
+    text-align: center;
+
+}

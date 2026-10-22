@@ -8,27 +8,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/static/css/estilos.css">
-<style>
-  .titulo-lista{ display:flex; align-items:baseline; justify-content:space-between; }
-  .titulo-lista h2{ font-size:18px; }
-  .titulo-lista span{ color:var(--gris); font-size:13.5px; }
-</style>
-</head>
-<body>
+<link rel="stylesheet" href="/static/css/carrito.css">
+<link rel="stylesheet" href="/static/css/footer.css">
 
-<header class="barra">
-  <div class="barra-in">
-    <a class="marca" href="/"><span class="marca-icono">R</span>Recetario</a>
-    <nav class="menu">
-      <a href="/">Home</a>
-      <a class="activo" href="/carrito">Carrito</a>
-      <a href="/perfil">Mi perfil</a>
-    </nav>
-    <div class="cuenta">
-      <button class="btn-salir" onclick="logout()">Cerrar sesión</button>
-    </div>
-  </div>
-</header>
+
+
+{% include "partials/header.html" %}
+
 
 <main class="lienzo">
 
@@ -54,6 +40,104 @@
   </div>
 
 </main>
+
+<footer class="pie-sitio">
+
+    <div class="pie-in pie-4col">
+
+        <div>
+            <div class="pie-marca">
+                <span class="marca-icono">
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.5">
+                        <circle cx="12" cy="12" r="5.6"/>
+                        <circle cx="12" cy="12" r="2.9"/>
+                        <path d="M3 4v4a1.5 1.5 0 0 0 3 0V4M4.5 9.5V20"/>
+                        <path d="M21 20V4c-1.6 1.2-2.2 3.4-2.2 6.5H21"/>
+                    </svg>
+                </span>
+
+                Food-raneo
+            </div>
+
+            <p>
+                Organiza tu despensa, controla tus alimentos
+                y aprovecha mejor lo que tienes en casa.
+            </p>
+        </div>
+
+
+        <div class="pie-col">
+            <h4>Navegación</h4>
+
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/carrito">Carrito</a></li>
+                <li><a href="/perfil">Mi perfil</a></li>
+            </ul>
+        </div>
+
+
+        <div class="pie-col">
+            <h4>Mi cuenta</h4>
+
+            <ul>
+                <li><a href="/perfil">Mi perfil</a></li>
+
+                
+                <li>
+                    <a href="#" onclick="logout()">
+                        Cerrar sesión
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="pie-col">
+            <h4>Contáctanos</h4>
+
+            <ul class="contacto-lista">
+                <li>
+                    <span>Correo</span>
+                    food-raneo@alumnos.uaq.mx
+                </li>
+
+                <li>
+                    <span>Teléfono</span>
+                    +52 442 361 7716
+                </li>
+
+                <li>
+                    <span>Horario</span>
+                    Lunes a viernes · 9:00 – 18:00
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    <div class="pie-abajo">
+
+        <div class="pie-abajo-in">
+
+            <span>
+                © 2026 Food-raneo. Todos los derechos reservados.
+            </span>
+
+            <div class="enlaces-legales">
+                <a href="#">Aviso de privacidad</a>
+                <a href="#">Términos de uso</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
 
 <script src="/static/js/auth.js"></script>
 <script>

@@ -1,74 +1,475 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mi perfil · Recetario</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Mi perfil · Food-raneo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="/static/css/estilos.css">
-<style>
-  .perfil-top{ display:flex; gap:18px; align-items:center; margin-bottom:22px; }
-  .avatar{
-    width:70px;height:70px;border-radius:10px;flex:none;
-    background:var(--marino); color:#fff; display:grid; place-items:center;
-    font-family:'Lora',serif; font-size:25px; font-weight:600;
-  }
-  .perfil-top h2{ font-size:22px; }
-  .correo{ color:var(--gris); font-size:14px; margin:3px 0 0; }
-</style>
+<link rel="stylesheet" href="/static/css/perfil.css">
+<link rel="stylesheet" href="/static/css/footer.css">
+
 </head>
+<script src="/static/js/menu-activo.js" defer></script>
 <body>
 
-<header class="barra">
-  <div class="barra-in">
-    <a class="marca" href="/"><span class="marca-icono">R</span>Recetario</a>
-    <nav class="menu">
-      <a href="/">Home</a>
-      <a href="/carrito">Carrito</a>
-      <a class="activo" href="/perfil">Mi perfil</a>
-    </nav>
-    <div class="cuenta">
-      <button class="btn-salir" onclick="logout()">Cerrar sesión</button>
+  <!-- ENCABEZADO ORIGINAL -->
+ 
+{% include "partials/header.html" %}
+
+
+  <!-- CONTENIDO -->
+  <main class="lienzo perfil-pagina">
+
+    <div class="encabezado">
+      <h1>Mi perfil</h1>
+      <p>
+        Personaliza tu cuenta y administra tu información.
+      </p>
     </div>
-  </div>
-</header>
 
-<main class="lienzo">
-  <div class="encabezado">
-    <h1>Mi perfil</h1>
-    <p>Tus datos de cuenta.</p>
-  </div>
+    <div class="perfil-contenedor">
 
-  <div class="tarjeta" style="max-width:480px;">
-    <div class="perfil-top">
-      <div class="avatar" id="avatar-iniciales">–</div>
+      <!-- PRESENTACIÓN DEL USUARIO -->
+      <section class="perfil-resumen">
+
+        <div class="perfil-avatar-contenedor">
+
+          <div class="avatar" id="avatar-iniciales">
+            –
+          </div>
+
+          <img
+            id="perfil-foto"
+            class="perfil-foto"
+            alt="Foto de perfil"
+            hidden
+          >
+
+        </div>
+
+        <div class="perfil-resumen-datos">
+          <span class="perfil-etiqueta">
+            MI CUENTA
+          </span>
+
+          <h2 id="perfil-nombre">Cargando...</h2>
+
+          <p class="correo" id="perfil-correo"></p>
+        </div>
+
+        <label for="subir-foto" class="perfil-boton-foto">
+          Cambiar foto
+        </label>
+
+        <input
+          type="file"
+          id="subir-foto"
+          accept="image/png,image/jpeg,image/webp"
+          hidden
+        >
+
+      </section>
+
+      <!-- NAVEGACIÓN DEL PERFIL -->
+      <div class="perfil-pestanas" role="tablist"
+           aria-label="Secciones de mi perfil">
+
+        <button
+          type="button"
+          class="perfil-tab activo"
+          data-panel="datos"
+          role="tab"
+          aria-selected="true"
+          aria-controls="panel-datos">
+          Datos personales
+        </button>
+
+        <button
+          type="button"
+          class="perfil-tab"
+          data-panel="direccion"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-direccion">
+          Mi dirección
+        </button>
+
+        <button
+          type="button"
+          class="perfil-tab"
+          data-panel="seguridad"
+          role="tab"
+          aria-selected="false"
+          aria-controls="panel-seguridad">
+          Seguridad
+        </button>
+
+      </div>
+
+      <!-- DATOS PERSONALES -->
+      <section
+        id="panel-datos"
+        class="perfil-panel"
+        role="tabpanel">
+
+        <div class="perfil-panel-encabezado">
+          <h3>Información personal</h3>
+          <p>
+            Consulta y prepara los cambios de tus datos.
+          </p>
+        </div>
+
+        <form id="form-datos" class="perfil-formulario">
+
+          <div class="perfil-campo">
+            <label for="editar-nombre">
+              Nombre completo
+            </label>
+
+            <input
+              id="editar-nombre"
+              name="nombre"
+              type="text"
+              autocomplete="name"
+              placeholder="Tu nombre completo"
+              required
+            >
+          </div>
+
+          <div class="perfil-campo">
+            <label for="editar-correo">
+              Correo electrónico
+            </label>
+
+            <input
+              id="editar-correo"
+              name="correo"
+              type="email"
+              autocomplete="email"
+              placeholder="correo@ejemplo.com"
+              required
+            >
+          </div>
+
+          <div class="perfil-campo">
+            <label for="editar-telefono">
+              Teléfono
+            </label>
+
+            <input
+              id="editar-telefono"
+              name="telefono"
+              type="tel"
+              autocomplete="tel"
+              placeholder="442 123 4567"
+            >
+          </div>
+
+          <p class="perfil-aviso">
+            Los cambios todavía no se envían al servidor.
+          </p>
+
+          <button type="submit" class="perfil-guardar">
+            Revisar cambios
+          </button>
+
+          <p id="mensaje-datos"
+             class="perfil-mensaje"
+             role="status"
+             aria-live="polite"></p>
+
+        </form>
+
+      </section>
+
+      <!-- DIRECCIÓN -->
+      <section
+        id="panel-direccion"
+        class="perfil-panel"
+        role="tabpanel"
+        hidden>
+
+        <div class="perfil-panel-encabezado">
+          <h3>Mi dirección</h3>
+          <p>
+            Agrega los datos de tu domicilio.
+          </p>
+        </div>
+
+        <form id="form-direccion" class="perfil-formulario">
+
+          <div class="perfil-campo">
+            <label for="direccion-calle">
+              Calle y número
+            </label>
+
+            <input
+              id="direccion-calle"
+              type="text"
+              autocomplete="street-address"
+              placeholder="Calle, número exterior e interior"
+            >
+          </div>
+
+          <div class="perfil-campo">
+            <label for="direccion-colonia">
+              Colonia
+            </label>
+
+            <input
+              id="direccion-colonia"
+              type="text"
+              placeholder="Nombre de la colonia"
+            >
+          </div>
+
+          <div class="perfil-fila">
+
+            <div class="perfil-campo">
+              <label for="direccion-ciudad">
+                Ciudad
+              </label>
+
+              <input
+                id="direccion-ciudad"
+                type="text"
+                autocomplete="address-level2"
+                placeholder="Ciudad"
+              >
+            </div>
+
+            <div class="perfil-campo">
+              <label for="direccion-estado">
+                Estado
+              </label>
+
+              <input
+                id="direccion-estado"
+                type="text"
+                autocomplete="address-level1"
+                placeholder="Estado"
+              >
+            </div>
+
+          </div>
+
+          <div class="perfil-campo">
+            <label for="direccion-cp">
+              Código postal
+            </label>
+
+            <input
+              id="direccion-cp"
+              type="text"
+              inputmode="numeric"
+              autocomplete="postal-code"
+              maxlength="5"
+              placeholder="Código postal"
+            >
+          </div>
+
+          <p class="perfil-aviso">
+            La dirección no se guardará en la base de datos
+            hasta conectar una función de actualización.
+          </p>
+
+          <button type="submit" class="perfil-guardar">
+            Revisar dirección
+          </button>
+
+          <p id="mensaje-direccion"
+             class="perfil-mensaje"
+             role="status"
+             aria-live="polite"></p>
+
+        </form>
+
+      </section>
+
+      <!-- SEGURIDAD -->
+      <section
+        id="panel-seguridad"
+        class="perfil-panel"
+        role="tabpanel"
+        hidden>
+
+        <div class="perfil-panel-encabezado">
+          <h3>Seguridad de mi cuenta</h3>
+          <p>
+            Protege el acceso a tu información.
+          </p>
+        </div>
+
+        <form id="form-seguridad" class="perfil-formulario">
+
+          <div class="perfil-campo">
+            <label for="clave-actual">
+              Contraseña actual
+            </label>
+
+            <input
+              id="clave-actual"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Ingresa tu contraseña actual"
+              required
+            >
+          </div>
+
+          <div class="perfil-campo">
+            <label for="clave-nueva">
+              Nueva contraseña
+            </label>
+
+            <input
+              id="clave-nueva"
+              type="password"
+              autocomplete="new-password"
+              placeholder="Mínimo 8 caracteres"
+              minlength="8"
+              required
+            >
+          </div>
+
+          <div class="perfil-campo">
+            <label for="clave-confirmar">
+              Confirmar contraseña
+            </label>
+
+            <input
+              id="clave-confirmar"
+              type="password"
+              autocomplete="new-password"
+              placeholder="Repite la nueva contraseña"
+              minlength="8"
+              required
+            >
+          </div>
+
+          <p class="perfil-aviso">
+            Por seguridad, este formulario únicamente
+            valida los datos. No cambia tu contraseña.
+          </p>
+
+          <button type="submit" class="perfil-guardar">
+            Validar contraseña
+          </button>
+
+          <p id="mensaje-seguridad"
+             class="perfil-mensaje"
+             role="status"
+             aria-live="polite"></p>
+
+        </form>
+
+        <div class="perfil-sesion">
+          <h4>Sesión activa</h4>
+          <p>Puedes cerrar tu sesión de forma segura.</p>
+
+          <button
+            type="button"
+            class="perfil-salir"
+            onclick="logout()">
+            Cerrar sesión
+          </button>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="pie-sitio">
+
+    <div class="pie-in pie-3col">
+
       <div>
-        <h2 id="perfil-nombre">Cargando...</h2>
-        <p class="correo" id="perfil-correo"></p>
+        <div class="pie-marca">
+          Food-raneo
+        </div>
+
+        <p>
+          Organiza tu despensa, controla tus alimentos
+          y aprovecha mejor lo que tienes en casa.
+        </p>
+      </div>
+
+      <div class="pie-col">
+        <h4>Navegación</h4>
+
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/carrito">Carrito</a></li>
+          <li><a href="/perfil">Mi perfil</a></li>
+        </ul>
+      </div>
+
+      <div class="pie-col">
+        <h4>Contáctanos</h4>
+
+        <ul class="contacto-lista">
+          <li>
+            <span>Correo</span>
+            food-raneo@alumnos.uaq.mx
+          </li>
+          <li>
+            <span>Teléfono</span>
+            +52 442 361 7716
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="pie-abajo">
+      <div class="pie-abajo-in">
+
+        <span>
+          © 2026 Food-raneo.
+          Todos los derechos reservados.
+        </span>
+
+        <div class="enlaces-legales">
+          <a href="#">Aviso de privacidad</a>
+          <a href="#">Términos de uso</a>
+        </div>
+
       </div>
     </div>
 
-    <button class="boton boton-marino boton-bloque" onclick="logout()">Cerrar sesión</button>
-  </div>
-</main>
+  </footer>
 
-<script src="/static/js/auth.js"></script>
-<script>
-requireAuth();
+  
+  <script src="/static/js/auth.js"></script>
 
-async function loadPerfil() {
-  const res = await apiFetch("/auth/me");
-  if (!res || !res.ok) return;
-  const user = await res.json();
-  document.getElementById("perfil-nombre").textContent = user.nombre;
-  document.getElementById("perfil-correo").textContent = user.email;
-  const iniciales = user.nombre.split(" ").map(p => p[0]).slice(0, 2).join("").toUpperCase();
-  document.getElementById("avatar-iniciales").textContent = iniciales;
-}
+  <script>
+    requireAuth();
 
-loadPerfil();
-</script>
+    async function loadPerfil() {
+      const res = await apiFetch("/auth/me");
+      if (!res || !res.ok) return;
+      const user = await res.json();
+      document.getElementById("perfil-nombre").textContent = user.nombre;
+      document.getElementById("perfil-correo").textContent = user.email;
+      const iniciales = user.nombre.split(" ").map(p => p[0]).slice(0, 2).join("").toUpperCase();
+      document.getElementById("avatar-iniciales").textContent = iniciales;
+    }
+
+    loadPerfil();
+  </script>
+
+
+  <script src="/static/js/perfil-ui.js" defer></script>
+
 </body>
 </html>

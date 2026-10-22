@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1">
+
+    <title>Contáctanos · Food-raneo</title>
+
+    <link rel="stylesheet" href="/static/css/estilos.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/paginas-extra.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+
+    <script src="/static/js/auth.js" defer></script>
+    <script src="/static/js/menu-activo.js" defer></script>
+    <script src="/static/js/contactanos.js" defer></script>
+</head>
+
+<body class="extra-body">
+
+    {% include "partials/header.html" %}
+
+    <main class="extra-main">
+
+        <section class="extra-intro">
+
+            <span class="extra-kicker">
+                ESTAMOS PARA AYUDARTE
+            </span>
+
+            <h1>Contáctanos</h1>
+
+            <p>
+                ¿Tienes alguna duda, sugerencia
+                o problema con Food-raneo?
+                Envíanos un mensaje.
+            </p>
+
+        </section>
+
+        <div class="extra-contacto-layout">
+
+            <!-- INFORMACIÓN -->
+            <section class="extra-panel">
+
+                <h2>Información de contacto</h2>
+
+                <p>
+                    Puedes comunicarte con nosotros
+                    utilizando los siguientes medios.
+                </p>
+
+                <div class="extra-contacto-dato">
+
+                    <span class="extra-dato-icono">
+                        ✉
+                    </span>
+
+                    <div>
+                        <strong>Correo electrónico</strong>
+
+                        <a
+                            href="mailto:food-raneo@alumnos.uaq.mx">
+                            food-raneo@alumnos.uaq.mx
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="extra-contacto-dato">
+
+                    <span class="extra-dato-icono">
+                        ☎
+                    </span>
+
+                    <div>
+                        <strong>Teléfono</strong>
+
+                        <a href="tel:+524423617716">
+                            +52 442 361 7716
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="extra-contacto-nota">
+                    <h3>Food-raneo</h3>
+
+                    <p>
+                        Una plataforma para organizar
+                        alimentos, reducir desperdicios
+                        y encontrar recetas.
+                    </p>
+                </div>
+
+            </section>
+
+            <!-- FORMULARIO -->
+            <section class="extra-panel">
+
+                <h2>Envíanos un mensaje</h2>
+
+                <p>
+                    Completa el formulario para preparar
+                    tu correo electrónico.
+                </p>
+
+                <form
+                    id="form-contacto"
+                    class="extra-formulario">
+
+                    <div>
+                        <label for="contacto-nombre">
+                            Nombre
+                        </label>
+
+                        <input
+                            id="contacto-nombre"
+                            type="text"
+                            maxlength="80"
+                            placeholder="Tu nombre"
+                            required>
+                    </div>
+
+                    <div>
+                        <label for="contacto-correo">
+                            Correo electrónico
+                        </label>
+
+                        <input
+                            id="contacto-correo"
+                            type="email"
+                            placeholder="correo@ejemplo.com"
+                            required>
+                    </div>
+
+                    <div>
+                        <label for="contacto-asunto">
+                            Asunto
+                        </label>
+
+                        <select
+                            id="contacto-asunto"
+                            required>
+
+                            <option value="">
+                                Selecciona una opción
+                            </option>
+
+                            <option value="Duda">
+                                Duda
+                            </option>
+
+                            <option value="Sugerencia">
+                                Sugerencia
+                            </option>
+
+                            <option value="Problema técnico">
+                                Problema técnico
+                            </option>
+
+                            <option value="Otro">
+                                Otro
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="contacto-mensaje">
+                            Mensaje
+                        </label>
+
+                        <textarea
+                            id="contacto-mensaje"
+                            rows="6"
+                            maxlength="2000"
+                            placeholder="Escribe tu mensaje..."
+                            required></textarea>
+                    </div>
+
+                    <button
+                        class="extra-boton"
+                        type="submit">
+
+                        Preparar correo
+                    </button>
+
+                    <p
+                        id="contacto-estado"
+                        class="extra-nota"
+                        role="status"
+                        aria-live="polite">
+                    </p>
+
+                </form>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <footer class="extra-footer">
+
+        <div>
+            <strong>Food-raneo</strong>
+
+            <p>
+                Organiza tus alimentos y aprovecha
+                mejor lo que tienes en casa.
+            </p>
+        </div>
+
+        <div class="extra-footer-links">
+            <a href="/">Home</a>
+            <a href="/mis-recetas">Mis recetas</a>
+            <a href="/perfil">Mi perfil</a>
+        </div>
+
+        <p>© 2026 Food-raneo.</p>
+
+    </footer>
+
+</body>
+</html>

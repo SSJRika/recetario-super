@@ -3,64 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Home · Recetario</title>
+<title>Home · Food-raneo</title>      
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/static/css/estilos.css">
-<style>
-  .hero{
-    background:var(--marino); color:#DCE6EA; border-radius:var(--radio);
-    padding:38px 34px; margin-bottom:26px; display:grid;
-    grid-template-columns:1.4fr 1fr; gap:30px; align-items:center;
-  }
-  .hero h1{ color:#fff; font-size:28px; max-width:26ch; }
-  .hero p{ color:#A9BAC1; margin-top:12px; font-size:14.5px; max-width:48ch; }
-  .hero .acciones{ margin-top:22px; display:flex; gap:12px; flex-wrap:wrap; }
-  .hero .acciones .boton{ width:auto; }
-  .hero-cifras{
-    background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12);
-    border-radius:var(--radio); padding:20px; display:grid;
-    grid-template-columns:1fr 1fr 1fr; gap:16px;
-  }
-  .hero-cifras div{ text-align:left; }
-  .hero-cifras b{ display:block; font-family:'Lora',serif; font-size:27px; color:#fff; }
-  .hero-cifras small{ color:#9FB2B9; font-size:12.5px; }
-
-  .accesos{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:26px; }
-  .acceso{ background:var(--papel); border:1px solid var(--linea); border-radius:var(--radio); padding:20px; text-decoration:none; color:var(--tinta); }
-  .acceso:hover{ border-color:var(--linea-2); box-shadow:var(--sombra); }
-  .acceso .marca-mini{
-    width:34px;height:34px;border-radius:7px;background:var(--fondo);
-    display:grid;place-items:center;margin-bottom:14px;font-size:15px;color:var(--marino);
-    border:1px solid var(--linea);
-  }
-  .acceso h3{ font-size:16.5px; margin-bottom:6px; }
-  .acceso p{ color:var(--gris); font-size:13.5px; }
-
-  .seccion-doble{ display:grid; grid-template-columns:1.4fr 1fr; gap:20px; }
-  .aviso-lista{ list-style:none; margin:0; padding:0; }
-  .aviso-lista li{ display:flex; justify-content:space-between; align-items:baseline; padding:12px 0; border-bottom:1px solid var(--linea); font-size:14px; }
-  .aviso-lista li:last-child{ border-bottom:0; }
-  .aviso-lista li span.nombre{ font-weight:500; }
-  .aviso-lista li span.plazo{ color:var(--terracota); font-size:13px; font-weight:600; }
-</style>
+<link rel="stylesheet" href="/static/css/home.css">
+<link rel="stylesheet" href="/static/css/footer.css">
 </head>
+<script src="/static/js/menu-activo.js" defer></script>
 <body>
 
-<header class="barra">
-  <div class="barra-in">
-    <a class="marca" href="/"><span class="marca-icono">R</span>Recetario</a>
-    <nav class="menu">
-      <a class="activo" href="/">Home</a>
-      <a href="/carrito">Carrito</a>
-      <a href="/perfil">Mi perfil</a>
-    </nav>
-    <div class="cuenta">
-      <button class="btn-salir" onclick="logout()">Cerrar sesión</button>
-    </div>
-  </div>
-</header>
+
+{% include "partials/header.html" %}
 
 <main class="lienzo">
 
@@ -168,29 +123,102 @@
 </div>
 
 <footer class="pie-sitio">
-  <div class="pie-in">
-    <div>
-      <div class="pie-marca"><span class="marca-icono">R</span>Recetario</div>
-      <p>Tu despensa, tus fechas de caducidad y tu carrito, en un solo lugar.</p>
-    </div>
-    <div class="pie-col">
-      <h4>Navegación</h4>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/carrito">Carrito</a></li>
-        <li><a href="/perfil">Mi perfil</a></li>
-      </ul>
-    </div>
-    <div class="pie-col">
-      <h4>Cuenta</h4>
-      <ul>
-        <li><a href="/perfil">Mi perfil</a></li>
-        <li><a href="#" onclick="logout()">Cerrar sesión</a></li>
-      </ul>
-    </div>
-  </div>
-</footer>
 
+    <div class="pie-in">
+
+        <div>
+            <div class="pie-marca">
+                <span class="marca-icono">
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.5">
+                        <circle cx="12" cy="12" r="5.6"/>
+                        <circle cx="12" cy="12" r="2.9"/>
+                        <path d="M3 4v4a1.5 1.5 0 0 0 3 0V4M4.5 9.5V20"/>
+                        <path d="M21 20V4c-1.6 1.2-2.2 3.4-2.2 6.5H21"/>
+                    </svg>
+                </span>
+
+                Food-raneo
+            </div>
+
+            <p>
+                Organiza tu despensa, controla tus alimentos
+                y aprovecha mejor lo que tienes en casa.
+            </p>
+        </div>
+
+
+        <div class="pie-col">
+            <h4>Navegación</h4>
+
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/carrito">Carrito</a></li>
+                <li><a href="/perfil">Mi perfil</a></li>
+            </ul>
+        </div>
+
+
+        <div class="pie-col">
+            <h4>Mi cuenta</h4>
+
+            <ul>
+                <li><a href="/perfil">Mi perfil</a></li>
+
+                
+                <li>
+                    <a href="#" onclick="logout()">
+                        Cerrar sesión
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="pie-col">
+            <h4>Contáctanos</h4>
+
+            <ul class="contacto-lista">
+                <li>
+                    <span>Correo</span>
+                    food-raneo@alumnos.uaq.mx
+                </li>
+
+                <li>
+                    <span>Teléfono</span>
+                    +52 442 361 7716
+                </li>
+
+                <li>
+                    <span>Horario</span>
+                    Lunes a viernes · 9:00 – 18:00
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    <div class="pie-abajo">
+
+        <div class="pie-abajo-in">
+
+            <span>
+                © 2026 Food-raneo. Todos los derechos reservados.
+            </span>
+
+            <div class="enlaces-legales">
+                <a href="#">Aviso de privacidad</a>
+                <a href="#">Términos de uso</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
 <script src="/static/js/auth.js"></script>
 <script>
 requireAuth();

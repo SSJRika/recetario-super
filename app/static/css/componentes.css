@@ -1,0 +1,637 @@
+/* ============================================================
+
+   9. CONTENIDO PRINCIPAL
+
+============================================================ */
+
+.lienzo {
+
+    position: relative;
+
+    z-index: 1;
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    min-height: 620px;
+
+    margin: 0 auto;
+
+    padding:
+
+        55px 28px 100px;
+
+}
+
+.encabezado {
+
+    margin-bottom: 30px;
+
+}
+
+.encabezado h1 {
+
+    margin:
+
+        0 0 8px;
+
+    font-size:
+
+        clamp(28px, 4vw, 39px);
+
+}
+
+.encabezado p {
+
+    margin: 0;
+
+    color:
+
+        var(--texto-suave);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+}
+
+/* ============================================================
+
+   10. CONTENEDORES / TARJETAS
+
+============================================================ */
+
+.tarjeta {
+
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 28px;
+
+    background:
+
+        rgba(248, 252, 249, .94);
+
+    border:
+
+        1px solid
+
+        var(--borde);
+
+    border-radius:
+
+        var(--radio);
+
+    box-shadow:
+
+        var(--sombra);
+
+    backdrop-filter:
+
+        blur(8px);
+
+}
+
+/* burbuja dentro de las tarjetas */
+
+.tarjeta::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 135px;
+
+    height: 135px;
+
+    right: -75px;
+
+    bottom: -75px;
+
+    border-radius: 50%;
+
+    background:
+
+        rgba(88, 173, 125, .09);
+
+    pointer-events: none;
+
+}
+
+/* contenedor verde alternativo */
+
+.tarjeta-verde {
+
+    background:
+
+        rgba(217, 240, 226, .91);
+
+}
+
+/* asegura que el contenido esté encima de la burbuja */
+
+.tarjeta > * {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+/* ============================================================
+
+   11. BOTONES
+
+============================================================ */
+
+.boton {
+
+    min-height: 43px;
+
+    padding:
+
+        10px 19px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    border:
+
+        1px solid transparent;
+
+    border-radius: 8px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+
+        transform .2s ease,
+
+        background .2s ease,
+
+        border-color .2s ease,
+
+        box-shadow .2s ease;
+
+}
+
+.boton:hover {
+
+    transform:
+
+        translateY(-2px);
+
+}
+
+/* botón principal */
+
+.boton-marino,
+
+.boton-principal {
+
+    background:
+
+        var(--verde-800);
+
+    border-color:
+
+        var(--verde-800);
+
+    color: white;
+
+}
+
+.boton-marino:hover,
+
+.boton-principal:hover {
+
+    background:
+
+        var(--verde-900);
+
+    border-color:
+
+        var(--verde-900);
+
+    box-shadow:
+
+        0 8px 20px
+
+        rgba(36,86,63,.17);
+
+}
+
+/* botón verde vivo */
+
+.boton-dorado {
+
+    background:
+
+        var(--verde-500);
+
+    border-color:
+
+        var(--verde-500);
+
+    color: white;
+
+}
+
+.boton-dorado:hover {
+
+    background:
+
+        var(--verde-600);
+
+    border-color:
+
+        var(--verde-600);
+
+}
+
+/* botón blanco */
+
+.boton-borde,
+
+.boton-secundario {
+
+    background:
+
+        rgba(255,255,255,.92);
+
+    border-color:
+
+        var(--verde-200);
+
+    color:
+
+        var(--verde-800);
+
+}
+
+.boton-borde:hover,
+
+.boton-secundario:hover {
+
+    background:
+
+        var(--verde-50);
+
+    border-color:
+
+        var(--verde-400);
+
+}
+
+.boton-bloque {
+
+    width: 100%;
+
+}
+
+/* ============================================================
+
+   12. FORMULARIOS
+
+============================================================ */
+
+.campo {
+
+    margin-bottom: 16px;
+
+}
+
+.campo label {
+
+    display: block;
+
+    margin-bottom: 7px;
+
+    color:
+
+        var(--texto);
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+}
+
+input,
+
+select,
+
+textarea {
+
+    width: 100%;
+
+    min-height: 43px;
+
+    padding:
+
+        10px 13px;
+
+    border:
+
+        1px solid
+
+        var(--borde);
+
+    border-radius: 8px;
+
+    outline: none;
+
+    background:
+
+        rgba(255,255,255,.94);
+
+    color:
+
+        var(--texto);
+
+    font-family: inherit;
+
+    transition:
+
+        border-color .2s ease,
+
+        box-shadow .2s ease,
+
+        background .2s ease;
+
+}
+
+textarea {
+
+    min-height: 100px;
+
+    resize: vertical;
+
+}
+
+input:hover,
+
+select:hover,
+
+textarea:hover {
+
+    border-color:
+
+        var(--verde-300);
+
+}
+
+input:focus,
+
+select:focus,
+
+textarea:focus {
+
+    background:
+
+        white;
+
+    border-color:
+
+        var(--verde-500);
+
+    box-shadow:
+
+        0 0 0 3px
+
+        rgba(88,173,125,.13);
+
+}
+
+input::placeholder,
+
+textarea::placeholder {
+
+    color:
+
+        #91A89C;
+
+}
+
+/* ============================================================
+
+   18. DISTINTIVOS / ETIQUETAS
+
+============================================================ */
+
+.distintivo {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    min-height: 25px;
+
+    padding:
+
+        4px 10px;
+
+    background:
+
+        var(--verde-50);
+
+    border:
+
+        1px solid
+
+        var(--verde-100);
+
+    border-radius: 20px;
+
+    color:
+
+        var(--verde-800);
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+}
+
+/* ============================================================
+
+   19. ERRORES / MENSAJES
+
+============================================================ */
+
+.error-caja {
+
+    margin-bottom: 15px;
+
+    padding:
+
+        11px 13px;
+
+    background:
+
+        #E0F2E7;
+
+    border:
+
+        1px solid
+
+        var(--verde-200);
+
+    border-radius: 8px;
+
+    color:
+
+        var(--verde-900);
+
+    font-size: 12px;
+
+}
+
+/* IMPORTANTE PARA LOS PANELES DEL LOGIN */
+
+.oculto,
+
+[hidden] {
+
+    display:
+
+        none !important;
+
+}
+
+/* ============================================================
+
+   20. MODALES
+
+============================================================ */
+
+.modal-fondo {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 2000;
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+
+        rgba(25, 67, 48, .54);
+
+    backdrop-filter:
+
+        blur(5px);
+
+}
+
+.modal-fondo.activo {
+
+    display: flex;
+
+}
+
+.modal-caja {
+
+    position: relative;
+
+    overflow: hidden;
+
+    width: 100%;
+
+    max-width: 400px;
+
+    padding: 30px;
+
+    background:
+
+        #F8FCF9;
+
+    border:
+
+        1px solid
+
+        var(--verde-200);
+
+    border-radius:
+
+        18px;
+
+    box-shadow:
+
+        0 30px 80px
+
+        rgba(25,60,44,.20);
+
+}
+
+.modal-caja::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 130px;
+
+    height: 130px;
+
+    right: -70px;
+
+    top: -70px;
+
+    border-radius: 50%;
+
+    background:
+
+        rgba(88,173,125,.10);
+
+}
+
+.modal-caja > * {
+
+    position: relative;
+
+    z-index: 2;
+
+}
+
+.modal-caja h3 {
+
+    margin-bottom: 8px;
+
+}
+
+.modal-caja p {
+
+    color:
+
+        var(--texto-suave);
+
+}
+
+.emoji-grande {
+
+    font-size: 38px;
+
+}

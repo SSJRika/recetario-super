@@ -1,0 +1,95 @@
+/* ============================================================
+
+   17. PERFIL
+
+============================================================ */
+
+.perfil-top {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+
+    margin-bottom: 27px;
+
+    padding-bottom: 27px;
+
+    border-bottom:
+
+        1px solid
+
+        var(--borde-claro);
+
+}
+
+.avatar {
+
+    width: 82px;
+
+    height: 82px;
+
+    flex: none;
+
+    display: grid;
+
+    place-items: center;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            var(--verde-800),
+
+            var(--verde-500)
+
+        );
+
+    border:
+
+        5px solid
+
+        var(--verde-50);
+
+    border-radius: 50%;
+
+    color: white;
+
+    font-family:
+
+        'Lora',
+
+        serif;
+
+    font-size: 27px;
+
+    box-shadow:
+
+        0 8px 22px
+
+        rgba(40,102,75,.14);
+
+}
+
+.perfil-top h2 {
+
+    margin:
+
+        0 0 4px;
+
+    font-size: 24px;
+
+}
+
+.correo {
+
+    color:
+
+        var(--texto-suave);
+
+    font-size: 13px;
+
+}

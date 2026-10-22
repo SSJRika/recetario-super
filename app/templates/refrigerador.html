@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi refrigerador · Food-raneo</title>
+
+<link rel="stylesheet" href="/static/css/estilos.css">
+<link rel="stylesheet" href="/static/css/refrigerador.css">
+<link rel="stylesheet" href="/static/css/footer.css">
+
+<script src="/static/js/refrigerador-ui.js" defer></script>
+
+</head>
+<script src="/static/js/menu-activo.js" defer></script>
+<body class="pagina-refri">
+
+  <!-- ENCABEZADO -->
+
+{% include "partials/header.html" %}
+
+
+  <main class="refri-main">
+
+    <div class="refri-encabezado">
+      <span class="refri-kicker">TU COCINA INTELIGENTE</span>
+      <h1>Mi refrigerador </h1>
+
+      <p>
+        Registra tus alimentos, visualiza tu despensa
+        y encuentra ideas para cocinar con lo que ya tienes.
+      </p>
+    </div>
+
+    <div class="refri-layout">
+
+      <!-- REGISTRO DE ALIMENTOS -->
+      <section class="refri-card" aria-labelledby="registro-titulo">
+
+        <h2 id="registro-titulo">Agregar alimento</h2>
+
+        <p class="refri-sub">
+          Toma una foto o selecciona una imagen.
+          Después registra el alimento y su cantidad.
+        </p>
+
+        <label class="refri-upload" for="foto-alimento">
+          <span aria-hidden="true">📷</span>
+          <strong>Tomar foto o elegir imagen</strong>
+          <small>JPG, PNG o WEBP · máximo 3 MB</small>
+        </label>
+
+        <input
+          id="foto-alimento"
+          type="file"
+          accept="image/jpeg,image/png,image/webp"
+          capture="environment"
+          class="refri-file"
+        >
+
+        <div id="vista-foto" class="refri-preview" hidden>
+          <img
+            id="imagen-previa"
+            alt="Vista previa del alimento seleccionado"
+          >
+
+          <button
+            type="button"
+            id="quitar-foto"
+            class="refri-link">
+            Quitar fotografía
+          </button>
+        </div>
+
+        <p class="refri-nota">
+          La fotografía se previsualiza. Por ahora, el
+          nombre del alimento se registra manualmente.
+          El reconocimiento automático mediante IA
+          requiere una integración posterior.
+        </p>
+
+        <form id="form-alimento" class="refri-form">
+
+          <label for="nombre-alimento">
+            Nombre del alimento
+          </label>
+
+          <input
+            id="nombre-alimento"
+            name="nombre"
+            required
+            maxlength="50"
+            placeholder="Ej. Jitomate"
+            list="alimentos-sugeridos"
+            autocomplete="off"
+          >
+
+          <datalist id="alimentos-sugeridos">
+            <option value="Jitomate">
+            <option value="Tomate">
+            <option value="Cebolla">
+            <option value="Papa">
+            <option value="Zanahoria">
+            <option value="Lechuga">
+            <option value="Huevo">
+            <option value="Queso">
+            <option value="Leche">
+            <option value="Pollo">
+            <option value="Arroz">
+            <option value="Pasta">
+            <option value="Aguacate">
+            <option value="Manzana">
+            <option value="Pepino">
+            <option value="Pan">
+            <option value="Ajo">
+          </datalist>
+
+          <div class="refri-campos">
+
+            <div>
+              <label for="cantidad-alimento">Cantidad</label>
+
+              <input
+                id="cantidad-alimento"
+                name="cantidad"
+                type="number"
+                min="0.01"
+                max="9999"
+                step="0.01"
+                value="1"
+                required
+              >
+            </div>
+
+            <div>
+              <label for="unidad-alimento">Unidad</label>
+
+              <select id="unidad-alimento" name="unidad">
+                <option value="pzs">Piezas (pzs)</option>
+                <option value="kg">Kilogramos (kg)</option>
+                <option value="g">Gramos (g)</option>
+                <option value="L">Litros (L)</option>
+                <option value="ml">Mililitros (ml)</option>
+              </select>
+            </div>
+
+          </div>
+          
+          <!-- FECHA DE CADUCIDAD -->
+
+          <div class="refri-campo-fecha">
+            <label for="caducidad-alimento">
+              📅 Fecha de caducidad
+            </label>
+
+            <input
+              id="caducidad-alimento"
+              name="caducidad"
+              type="date"
+              required
+            >
+
+            <small>
+              Esta fecha permite clasificar automáticamente
+              el alimento como fresco, por caducar o caducado.
+            </small>
+          </div>
+
+          <button class="refri-primary" type="submit">
+            ＋ Guardar en mi refrigerador
+          </button>
+
+          <p
+            id="registro-mensaje"
+            class="refri-mensaje"
+            role="status"
+            aria-live="polite">
+          </p>
+
+        </form>
+      </section>
+
+      <!-- REFRIGERADOR GRÁFICO -->
+      <section
+        class="refri-card refri-card-visual"
+        aria-labelledby="visual-titulo">
+
+        <div class="refri-heading-row">
+
+          <div>
+            <h2 id="visual-titulo">Mi refrigerador</h2>
+            <p class="refri-sub">Tus alimentos disponibles</p>
+          </div>
+
+          <span id="contador-refri" class="refri-count">
+            0 productos
+          </span>
+
+        </div>
+
+        
+        <!-- RESUMEN DE CADUCIDAD -->
+
+        <div class="refri-estados" aria-label="Estado de alimentos">
+
+          <div class="refri-estado resumen-fresco">
+            <span>🟢 Frescos</span>
+            <strong id="total-frescos">0</strong>
+          </div>
+
+          <div class="refri-estado resumen-proximos">
+            <span>🟠 Por caducar</span>
+            <strong id="total-proximos">0</strong>
+          </div>
+
+          <div class="refri-estado resumen-caducados">
+            <span>🔴 Caducados</span>
+            <strong id="total-caducados">0</strong>
+          </div>
+
+        </div>
+
+        <!-- FILTRAR PRODUCTOS -->
+
+        <div class="refri-filtros">
+          <label for="filtro-caducidad">
+            Mostrar alimentos:
+          </label>
+
+          <select id="filtro-caducidad">
+            <option value="todos">Todos</option>
+            <option value="fresco">Frescos</option>
+            <option value="proximo">Por caducar</option>
+            <option value="hoy">Caducan hoy</option>
+            <option value="caducado">Caducados</option>
+            <option value="sin-fecha">Sin fecha</option>
+          </select>
+        </div>
+
+
+        <div class="refrigerador-grafico">
+
+          <div class="refri-puerta-top">
+            <span>Food-raneo</span>
+            <span aria-hidden="true">❄️</span>
+          </div>
+
+          <div
+            id="refri-estantes"
+            class="refri-estantes"
+            aria-live="polite">
+
+            <p class="refri-vacio">
+              Tu refrigerador está vacío.
+              ¡Agrega tu primer alimento!
+            </p>
+
+          </div>
+
+          <div class="refri-base"></div>
+        </div>
+
+        <div class="refri-inventario">
+          <h3>Inventario</h3>
+
+          <div
+            id="lista-alimentos"
+            class="refri-lista">
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+    <!-- RECETAS -->
+    <section
+      class="refri-card refri-recetas"
+      aria-labelledby="recetas-titulo">
+
+      <div class="refri-heading-row">
+
+        <div>
+          <span class="refri-kicker">
+            APROVECHA TUS INGREDIENTES
+          </span>
+
+          <h2 id="recetas-titulo">
+            👩‍🍳 ¿Qué puedo cocinar?
+          </h2>
+
+          <p class="refri-sub">
+            Sugerencias basadas en los alimentos
+            que registraste.
+          </p>
+        </div>
+
+        <button
+          id="actualizar-recetas"
+          class="refri-secondary"
+          type="button">
+          ↻ Buscar recetas
+        </button>
+
+      </div>
+
+      <div
+        id="resultado-recetas"
+        class="refri-recetas-grid"
+        aria-live="polite">
+      </div>
+
+      <p class="refri-nota">
+        Las sugerencias de esta versión se calculan
+        con recetas de ejemplo almacenadas en JavaScript.
+        Todavía no utilizan IA generativa.
+      </p>
+
+    </section>
+
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="pie-sitio">
+
+    <div class="pie-in pie-3col">
+
+      <div>
+        <div class="pie-marca">Food-raneo</div>
+
+        <p>
+          Organiza tus alimentos y aprovecha
+          mejor lo que tienes en casa.
+        </p>
+      </div>
+
+      <div class="pie-col">
+        <h4>Navegación</h4>
+
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/carrito">Carrito</a></li>
+          <li><a href="/perfil">Mi perfil</a></li>
+        </ul>
+      </div>
+
+      <div class="pie-col">
+        <h4>Contáctanos</h4>
+
+        <ul class="contacto-lista">
+          <li>
+            <span>Correo</span>
+            food-raneo@alumnos.uaq.mx
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="pie-abajo">
+      <div class="pie-abajo-in">
+
+        <span>
+          © 2026 Food-raneo.
+          Todos los derechos reservados.
+        </span>
+
+        <div class="enlaces-legales">
+          <a href="#">Aviso de privacidad</a>
+          <a href="#">Términos de uso</a>
+        </div>
+
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- VENTANA DE DETALLE DE RECETA -->
+  <dialog
+    id="receta-dialogo"
+    class="refri-dialogo"
+    aria-labelledby="dialogo-titulo">
+
+    <button
+      type="button"
+      id="cerrar-dialogo"
+      class="refri-cerrar"
+      aria-label="Cerrar">
+      ×
+    </button>
+
+    <div class="refri-dialogo-contenido">
+
+      <span
+        id="dialogo-emoji"
+        class="refri-dialogo-emoji">
+      </span>
+
+      <h2 id="dialogo-titulo"></h2>
+      <p id="dialogo-tiempo"></p>
+
+      <h3>Ingredientes</h3>
+      <ul id="dialogo-ingredientes"></ul>
+
+      <h3>Preparación</h3>
+      <ol id="dialogo-pasos"></ol>
+
+    </div>
+
+  </dialog>
+<script src="/static/js/auth.js"></script>
+</body>
+</html>

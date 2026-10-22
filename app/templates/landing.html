@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<link rel="stylesheet" href="/static/css/estilos.css">
+<link rel="stylesheet" href="/static/css/landing.css">
+<link rel="stylesheet" href="/static/css/footer.css">
+<script src="/static/js/menu-activo.js" defer></script>
+
+{% include "partials/header.html" %}
+
+<body>
+
+
+    <main>
+
+        <section class="hero-landing">
+
+            <div class="hero-landing-in">
+
+                <div class="hero-contenido">
+
+                    <span class="etiqueta">
+                        Tu despensa inteligente
+                    </span>
+
+                    <h1>
+                        Aprovecha mejor lo que ya tienes en casa.
+                    </h1>
+
+                    <p class="intro">
+                        Food-raneo te ayuda a organizar tu despensa,
+                        identificar productos próximos a caducar y preparar
+                        tus compras de una manera más sencilla.
+                    </p>
+
+                    <div class="acciones">
+
+                        <a class="boton boton-principal" href="/login#crear">
+                            Crear cuenta
+                        </a>
+
+                        <a class="boton boton-secundario" href="/login">
+                            Iniciar sesión
+                        </a>
+
+                        <a class="boton boton-texto" href="#nosotros">
+                            Conocer más ↓
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Tarjeta demostrativa -->
+
+                <div class="hero-visual">
+
+                    <div class="hero-visual-cabecera">
+                        <div>
+                            <span class="mini-etiqueta">MI DESPENSA</span>
+                            <h3>Productos recientes</h3>
+                        </div>
+
+                        <span class="estado-linea">
+                            Actualizada
+                        </span>
+                    </div>
+
+
+                    <div class="fila-visual">
+
+                        <div class="monograma-visual mv-cafe">
+                            A
+                        </div>
+
+                        <div class="texto-visual">
+                            <b>Aguacate</b>
+                            <small>3 piezas · Caduca pronto</small>
+                        </div>
+
+                        <span class="distintivo d-cafe">
+                            2 días
+                        </span>
+
+                    </div>
+
+
+                    <div class="fila-visual">
+
+                        <div class="monograma-visual mv-verde">
+                            L
+                        </div>
+
+                        <div class="texto-visual">
+                            <b>Leche entera</b>
+                            <small>1 litro · Refrigerado</small>
+                        </div>
+
+                        <span class="distintivo d-verde">
+                            Fresco
+                        </span>
+
+                    </div>
+
+
+                    <div class="fila-visual">
+
+                        <div class="monograma-visual mv-gris">
+                            P
+                        </div>
+
+                        <div class="texto-visual">
+                            <b>Pan de caja</b>
+                            <small>Agregado recientemente</small>
+                        </div>
+
+                        <span class="distintivo d-gris-landing">
+                            Nuevo
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+<!-- ==========================================
+     RECETAS DESTACADAS - FOOD-RANEO
+========================================== -->
+
+<section class="recetas-destacadas" id="recetas">
+
+    <div class="recetas-encabezado">
+        <span class="recetas-etiqueta">
+            INSPIRACIÓN PARA TU COCINA
+        </span>
+
+        <h2>¿Qué se te antoja cocinar hoy?</h2>
+
+        <p>
+            Descubre recetas fáciles, deliciosas y
+            perfectas para aprovechar tus ingredientes.
+        </p>
+    </div>
+
+    <div class="recetas-carrusel"
+         aria-label="Carrusel de recetas">
+
+        <div class="recetas-pista" id="recetas-pista">
+
+           
+            <article class="receta-slide">
+
+                <button
+                    type="button"
+                    class="receta-abrir"
+                    data-receta="ensalada"
+                    aria-label="Ver receta de ensalada fresca">
+
+                    <img
+                        src="/static/img/receta-ensalada.jpg"
+                        alt="Ensalada fresca">
+
+                    <div class="receta-info">
+
+                        <span>FÁCIL · 15 MIN</span>
+
+                        <h3>Ensalada fresca</h3>
+
+                        <p>
+                            Una opción ligera para aprovechar
+                            tus verduras.
+                        </p>
+
+                        <span class="receta-ver">
+                            Ver receta completa →
+                        </span>
+
+                    </div>
+
+                </button>
+
+            </article>
+
+           
+            <article class="receta-slide">
+
+                <button
+                    type="button"
+                    class="receta-abrir"
+                    data-receta="pasta"
+                    aria-label="Ver receta de pasta con tomate">
+
+                    <img
+                        src="/static/img/receta-pasta.jpg"
+                        alt="Pasta con tomate">
+
+                    <div class="receta-info">
+
+                        <span>FÁCIL · 25 MIN</span>
+
+                        <h3>Pasta con tomate</h3>
+
+                        <p>
+                            Prepara una comida deliciosa
+                            con ingredientes sencillos.
+                        </p>
+
+                        <span class="receta-ver">
+                            Ver receta completa →
+                        </span>
+
+                    </div>
+
+                </button>
+
+            </article>
+
+           
+            <article class="receta-slide">
+
+                <button
+                    type="button"
+                    class="receta-abrir"
+                    data-receta="desayuno"
+                    aria-label="Ver receta de desayuno saludable">
+
+                    <img
+                        src="/static/img/receta-desayuno.jpg"
+                        alt="Desayuno saludable">
+
+                    <div class="receta-info">
+
+                        <span>FÁCIL · 20 MIN</span>
+
+                        <h3>Desayuno saludable</h3>
+
+                        <p>
+                            Comienza tu día con una receta
+                            práctica y nutritiva.
+                        </p>
+
+                        <span class="receta-ver">
+                            Ver receta completa →
+                        </span>
+
+                    </div>
+
+                </button>
+
+            </article>
+
+        </div>
+
+    </div>
+
+    <p class="recetas-indicacion">
+        Desliza horizontalmente para descubrir más recetas →
+    </p>
+
+</section>
+
+
+<!-- VENTANA DE RECETAS -->
+<dialog id="detalle-receta"
+        class="detalle-receta"
+        aria-labelledby="detalle-titulo">
+
+    <button
+        type="button"
+        id="cerrar-receta"
+        class="cerrar-receta"
+        aria-label="Cerrar receta">
+        ×
+    </button>
+
+    <img id="detalle-imagen" src="" alt="">
+
+    <div class="detalle-contenido">
+
+        <span id="detalle-tiempo"></span>
+
+        <h2 id="detalle-titulo"></h2>
+
+        <p id="detalle-descripcion"></p>
+
+        <h3>Ingredientes</h3>
+        <ul id="detalle-ingredientes"></ul>
+
+        <h3>Preparación</h3>
+        <ol id="detalle-pasos"></ol>
+
+    </div>
+
+</dialog>
+
+<script src="/static/js/recetas-landing.js" defer></script>
+
+
+
+
+        <!-- ==================================================
+             NOSOTROS
+        =================================================== -->
+
+        <section class="seccion seccion-nosotros" id="nosotros">
+
+            <div class="titulo-seccion">
+
+                <span class="etiqueta">
+                    Nosotros
+                </span>
+
+                <h2>
+                    Una forma más sencilla de cuidar tu despensa
+                </h2>
+
+                <p>
+                    Tecnología pensada para hacer más fácil la organización
+                    de los alimentos en el hogar.
+                </p>
+
+            </div>
+
+
+            <div class="nosotros-grid">
+
+                <div class="nosotros-texto">
+
+                    <span class="sobre-titulo">
+                        ¿QUIÉNES SOMOS?
+                    </span>
+
+                    <h3>
+                        Menos desperdicio.<br>
+                        Más organización.
+                    </h3>
+
+                    <p>
+                        Food-raneo surge como una herramienta para facilitar
+                        el control de los productos que tenemos en casa.
+                    </p>
+
+                    <p>
+                        Nuestro objetivo es que puedas conocer qué alimentos
+                        tienes disponibles, cuáles están próximos a caducar y
+                        qué productos realmente necesitas comprar.
+                    </p>
+
+                    <a href="#como-funciona" class="enlace-simple">
+                        Descubre cómo funciona →
+                    </a>
+
+                </div>
+
+
+                <div class="nosotros-datos">
+
+                    <article class="dato-destacado">
+                        <span>01</span>
+                        <div>
+                            <h4>Organización</h4>
+                            <p>
+                                Mantén tus productos registrados
+                                en un solo lugar.
+                            </p>
+                        </div>
+                    </article>
+
+
+                    <article class="dato-destacado">
+                        <span>02</span>
+                        <div>
+                            <h4>Prevención</h4>
+                            <p>
+                                Identifica los alimentos que están
+                                próximos a caducar.
+                            </p>
+                        </div>
+                    </article>
+
+
+                    <article class="dato-destacado">
+                        <span>03</span>
+                        <div>
+                            <h4>Aprovechamiento</h4>
+                            <p>
+                                Compra únicamente lo que realmente
+                                necesitas.
+                            </p>
+                        </div>
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             MISIÓN Y VISIÓN
+        =================================================== -->
+
+        <section class="seccion-fondo">
+
+            <div class="seccion">
+
+                <div class="mision-vision">
+
+                    <article class="mv-tarjeta">
+
+                        <span class="mv-numero">01</span>
+
+                        <span class="sobre-titulo">NUESTRA MISIÓN</span>
+
+                        <h3>Misión</h3>
+
+                        <p>
+                            Ayudar a las familias a organizar y aprovechar
+                            mejor los alimentos que compran mediante una
+                            herramienta sencilla, accesible y fácil de usar.
+                        </p>
+
+                    </article>
+
+
+                    <article class="mv-tarjeta mv-cafe">
+
+                        <span class="mv-numero">02</span>
+
+                        <span class="sobre-titulo">HACIA DÓNDE VAMOS</span>
+
+                        <h3>Visión</h3>
+
+                        <p>
+                            Convertir a Food-raneo en una plataforma que
+                            contribuya a reducir el desperdicio de alimentos
+                            y facilite la administración de la despensa en
+                            los hogares.
+                        </p>
+
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             FUNCIONES
+        =================================================== -->
+
+        <section class="seccion" id="caracteristicas">
+
+            <div class="titulo-seccion">
+
+                <span class="etiqueta">
+                    Funciones
+                </span>
+
+                <h2>
+                    Tu cocina organizada en un solo lugar
+                </h2>
+
+                <p>
+                    Herramientas diseñadas para ayudarte en las tareas
+                    cotidianas de tu despensa.
+                </p>
+
+            </div>
+
+
+            <div class="caracteristicas">
+
+                <article class="caracteristica">
+
+                    <div class="icono-carac">
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.6"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="5" y="3" width="14" height="18" rx="2"/>
+                            <line x1="5" y1="11" x2="19" y2="11"/>
+                            <line x1="8" y1="7" x2="8" y2="7.01"/>
+                        </svg>
+                    </div>
+
+                    <span class="numero-carac">01</span>
+
+                    <h3>Despensa virtual</h3>
+
+                    <p>
+                        Consulta los productos que tienes disponibles
+                        desde una sola pantalla.
+                    </p>
+
+                </article>
+
+
+                <article class="caracteristica">
+
+                    <div class="icono-carac">
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.6"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/>
+                            <circle cx="12" cy="13" r="3.2"/>
+                        </svg>
+                    </div>
+
+                    <span class="numero-carac">02</span>
+
+                    <h3>Registro con fotografía</h3>
+
+                    <p>
+                        Facilita el registro de tus productos utilizando
+                        las herramientas disponibles en la plataforma.
+                    </p>
+
+                </article>
+
+
+                <article class="caracteristica">
+
+                    <div class="icono-carac">
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.6"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="8.5"/>
+                            <path d="M12 7.5V12l3 2"/>
+                        </svg>
+                    </div>
+
+                    <span class="numero-carac">03</span>
+
+                    <h3>Control de caducidad</h3>
+
+                    <p>
+                        Identifica con anticipación los productos que
+                        requieren ser utilizados primero.
+                    </p>
+
+                </article>
+
+
+                <article class="caracteristica">
+
+                    <div class="icono-carac">
+                        <svg viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1.6"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 4h2l2.2 11.1a1.5 1.5 0 0 0 1.48 1.2h7.94a1.5 1.5 0 0 0 1.47-1.18L20 8H6"/>
+                            <circle cx="9.5" cy="19.5" r="1.2"/>
+                            <circle cx="17" cy="19.5" r="1.2"/>
+                        </svg>
+                    </div>
+
+                    <span class="numero-carac">04</span>
+
+                    <h3>Lista de compras</h3>
+
+                    <p>
+                        Mantén organizada tu próxima compra con los
+                        productos que hacen falta en casa.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             CÓMO FUNCIONA
+        =================================================== -->
+
+        <section class="como-funciona-fondo" id="como-funciona">
+
+            <div class="seccion">
+
+                <div class="titulo-seccion titulo-claro">
+
+                    <span class="etiqueta">
+                        Cómo funciona
+                    </span>
+
+                    <h2>
+                        Empieza a organizar tu despensa
+                    </h2>
+
+                    <p>
+                        Cuatro pasos para comenzar a utilizar Food-raneo.
+                    </p>
+
+                </div>
+
+
+                <div class="pasos">
+
+                    <article class="paso">
+                        <div class="paso-num">01</div>
+                        <h3>Crea tu cuenta</h3>
+                        <p>
+                            Registra tus datos para comenzar a utilizar
+                            las herramientas de Food-raneo.
+                        </p>
+                    </article>
+
+
+                    <article class="paso">
+                        <div class="paso-num">02</div>
+                        <h3>Agrega productos</h3>
+                        <p>
+                            Registra los alimentos que actualmente tienes
+                            disponibles en casa.
+                        </p>
+                    </article>
+
+
+                    <article class="paso">
+                        <div class="paso-num">03</div>
+                        <h3>Consulta tu despensa</h3>
+                        <p>
+                            Revisa tus productos y presta atención a
+                            aquellos próximos a caducar.
+                        </p>
+                    </article>
+
+
+                    <article class="paso">
+                        <div class="paso-num">04</div>
+                        <h3>Organiza tus compras</h3>
+                        <p>
+                            Identifica lo que hace falta y prepara tu
+                            próxima compra.
+                        </p>
+                    </article>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================================
+             CTA
+        =================================================== -->
+
+        <section class="seccion">
+
+            <div class="cta-banda">
+
+                <div>
+                    <span class="sobre-titulo cta-etiqueta">
+                        COMIENZA AHORA
+                    </span>
+
+                    <h2>
+                        Una despensa más organizada empieza aquí.
+                    </h2>
+
+                    <p>
+                        Crea tu cuenta y comienza a registrar tus productos.
+                    </p>
+                </div>
+
+                <div class="cta-acciones">
+
+                    <a class="boton boton-cta" href="/login#crear">
+                        Crear cuenta
+                    </a>
+
+                    <a class="boton boton-cta-secundario" href="/login">
+                        Iniciar sesión
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==================================================
+         FOOTER
+    =================================================== -->
+
+   
+<!-- SECCIÓN DE CONTACTO -->
+<section class="fr-contacto" id="contacto">
+
+    <div class="fr-contacto-contenido">
+
+        <span class="fr-etiqueta">
+            ESTAMOS PARA AYUDARTE
+        </span>
+
+        <h2>Contáctanos</h2>
+
+        <p>
+            ¿Tienes alguna duda, sugerencia o problema
+            al utilizar Food-raneo?
+            Nos gustaría conocer tu opinión.
+        </p>
+
+        <div class="fr-contacto-tarjeta">
+
+            <div>
+                <h3>Correo electrónico</h3>
+
+                <a href="mailto:food-raneo@alumnos.uaq.mx">
+                    food-raneo@alumnos.uaq.mx
+                </a>
+            </div>
+
+            <div>
+                <h3>Teléfono</h3>
+
+                <a href="tel:+524423617716">
+                    +52 442 361 7716
+                </a>
+            </div>
+
+        </div>
+
+        <a
+            class="fr-boton-contacto"
+            href="mailto:food-raneo@alumnos.uaq.mx?subject=Consulta%20sobre%20Food-raneo">
+
+            Enviar un correo
+        </a>
+
+    </div>
+
+</section>

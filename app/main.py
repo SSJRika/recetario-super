@@ -19,3 +19,4 @@ app.include_router(web.router)
 def startup_event():
     revisar_caducidades()
     scheduler.start()
+

@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1">
+
+    <title>Mis recetas · Food-raneo</title>
+
+    <link rel="stylesheet" href="/static/css/estilos.css">
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/paginas-extra.css">
+    <link rel="stylesheet" href="/static/css/footer.css">
+
+    <script src="/static/js/auth.js" defer></script>
+    <script src="/static/js/menu-activo.js" defer></script>
+    <script src="/static/js/mis-recetas-page.js" defer></script>
+</head>
+
+<body class="extra-body">
+
+    {% include "partials/header.html" %}
+
+    <main class="extra-main">
+
+        <section class="extra-intro">
+
+            <span class="extra-kicker">
+                TU COCINA PERSONAL
+            </span>
+
+            <h1>Mis recetas</h1>
+
+            <p>
+                Explora recetas, guarda tus favoritas
+                y consulta los ingredientes y pasos
+                de preparación.
+            </p>
+
+        </section>
+
+        <section class="extra-panel">
+
+            <div class="extra-seccion-titulo">
+                <div>
+                    <h2>Recetas disponibles</h2>
+                    <p>
+                        Selecciona una receta para ver
+                        cómo prepararla.
+                    </p>
+                </div>
+            </div>
+
+            <div
+                id="catalogo-recetas"
+                class="extra-grid">
+            </div>
+
+        </section>
+
+        <section class="extra-panel">
+
+            <div class="extra-seccion-titulo">
+                <div>
+                    <h2>Mis recetas guardadas</h2>
+                    <p>
+                        Tus recetas favoritas estarán
+                        disponibles en este navegador.
+                    </p>
+                </div>
+
+                <span
+                    id="contador-favoritos"
+                    class="extra-contador">
+                    0 favoritas
+                </span>
+            </div>
+
+            <div
+                id="recetas-favoritas"
+                class="extra-grid">
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="extra-footer">
+        <div>
+            <strong>Food-raneo</strong>
+
+            <p>
+                Aprovecha tus ingredientes
+                y descubre nuevas recetas.
+            </p>
+        </div>
+
+        <div class="extra-footer-links">
+            <a href="/">Home</a>
+            <a href="/refrigerador">Mi refrigerador</a>
+            <a href="/contactanos">Contáctanos</a>
+        </div>
+
+        <p>© 2026 Food-raneo.</p>
+    </footer>
+
+    <!-- DETALLE DE RECETA -->
+    <dialog
+        id="detalle-receta-extra"
+        class="extra-dialogo">
+
+        <button
+            type="button"
+            id="cerrar-receta-extra"
+            class="extra-cerrar"
+            aria-label="Cerrar receta">
+            ×
+        </button>
+
+        <div class="extra-dialogo-interior">
+
+            <div
+                id="detalle-receta-emoji"
+                class="extra-emoji-grande">
+            </div>
+
+            <h2 id="detalle-receta-titulo"></h2>
+
+            <p id="detalle-receta-tiempo"></p>
+
+            <h3>Ingredientes</h3>
+
+            <ul id="detalle-receta-ingredientes"></ul>
+
+            <h3>Preparación</h3>
+
+            <ol id="detalle-receta-pasos"></ol>
+
+        </div>
+
+    </dialog>
+
+</body>
+</html>

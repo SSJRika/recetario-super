@@ -1,0 +1,309 @@
+:root {
+
+    --verde-900: #24563F;
+
+    --verde-800: #28664B;
+
+    --verde-700: #347A59;
+
+    --verde-600: #3E8B65;
+
+    --verde-500: #58AD7D;
+
+    --verde-400: #70BC8D;
+
+    --verde-300: #8DCEA6;
+
+    --verde-200: #A9DDBD;
+
+    --verde-150: #BCE5CB;
+
+    --verde-100: #CDEBD8;
+
+    --verde-50: #DDF2E5;
+
+    --fondo-verde: #E7F5EC;
+
+    --fondo-verde-2: #EDF8F1;
+
+    --contenedor: #F8FCF9;
+
+    --contenedor-verde: #D9F0E2;
+
+    --contenedor-verde-2: #E3F4E9;
+
+    --blanco: #FFFFFF;
+
+    --texto: #214334;
+
+    --texto-suave: #587064;
+
+    --texto-claro: #789185;
+
+    --borde: #BFDCCB;
+
+    --borde-claro: #D3E9DC;
+
+    --marino: var(--verde-800);
+
+    --papel: var(--blanco);
+
+    --tinta: var(--texto);
+
+    --gris: var(--texto-suave);
+
+    --gris-claro: var(--texto-claro);
+
+    --dorado: var(--verde-500);
+
+    --terracota: var(--verde-700);
+
+    --radio-pequeno: 8px;
+
+    --radio: 14px;
+
+    --radio-grande: 22px;
+
+     --sombra-suave:
+
+        0 8px 25px rgba(40, 102, 75, .06);
+
+    --sombra:
+
+        0 15px 40px rgba(40, 102, 75, .09);
+
+    --sombra-hover:
+
+        0 20px 45px rgba(40, 102, 75, .13);
+
+}
+
+/* ============================================================
+
+   2. RESET GENERAL
+
+============================================================ */
+
+* {
+
+    box-sizing: border-box;
+
+}
+
+html {
+
+    scroll-behavior: smooth;
+
+}
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+    color: var(--texto);
+
+    font-family:
+
+        'Inter',
+
+        Arial,
+
+        Helvetica,
+
+        sans-serif;
+
+    background:
+
+        radial-gradient(
+
+            circle at 5% 8%,
+
+            rgba(88, 173, 125, .19) 0 46px,
+
+            transparent 47px
+
+        ),
+
+        radial-gradient(
+
+            circle at 91% 12%,
+
+            rgba(62, 139, 101, .13) 0 115px,
+
+            transparent 116px
+
+        ),
+
+        radial-gradient(
+
+            circle at 24% 27%,
+
+            rgba(112, 188, 141, .15) 0 68px,
+
+            transparent 69px
+
+        ),
+
+        radial-gradient(
+
+            circle at 96% 39%,
+
+            rgba(88, 173, 125, .14) 0 165px,
+
+            transparent 166px
+
+        ),
+
+        radial-gradient(
+
+            circle at 8% 51%,
+
+            rgba(62, 139, 101, .10) 0 125px,
+
+            transparent 126px
+
+        ),
+
+        radial-gradient(
+
+            circle at 58% 62%,
+
+            rgba(112, 188, 141, .14) 0 54px,
+
+            transparent 55px
+
+        ),
+
+        radial-gradient(
+
+            circle at 90% 73%,
+
+            rgba(88, 173, 125, .13) 0 94px,
+
+            transparent 95px
+
+        ),
+
+        radial-gradient(
+
+            circle at 16% 82%,
+
+            rgba(62, 139, 101, .09) 0 175px,
+
+            transparent 176px
+
+        ),
+
+        radial-gradient(
+
+            circle at 52% 92%,
+
+            rgba(112, 188, 141, .16) 0 74px,
+
+            transparent 75px
+
+        ),
+
+        var(--fondo-verde);
+
+    background-attachment: fixed;
+
+    background-repeat: no-repeat;
+
+}
+
+/* ============================================================
+
+   3. TIPOGRAFÍA
+
+============================================================ */
+
+h1,
+
+h2,
+
+h3,
+
+h4 {
+
+    color: var(--texto);
+
+}
+
+h1,
+
+h2,
+
+h3 {
+
+    margin-top: 0;
+
+    font-family:
+
+        'Lora',
+
+        Georgia,
+
+        serif;
+
+}
+
+p {
+
+    color: var(--texto-suave);
+
+}
+
+a {
+
+    color: inherit;
+
+}
+
+/* ============================================================
+
+   22. UTILIDADES
+
+============================================================ */
+
+.texto-verde {
+
+    color:
+
+        var(--verde-700);
+
+}
+
+.texto-centro {
+
+    text-align: center;
+
+}
+
+.sin-margen {
+
+    margin: 0;
+
+}
+
+.separador {
+
+    width: 100%;
+
+    height: 1px;
+
+    margin:
+
+        25px 0;
+
+    background:
+
+        var(--borde-claro);
+
+}

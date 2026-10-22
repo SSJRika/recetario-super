@@ -1,0 +1,651 @@
+
+.pagina-login {
+    background:
+        radial-gradient(circle at 8% 15%,
+            rgba(105,180,136,.15) 0 80px,
+            transparent 81px),
+
+        radial-gradient(circle at 90% 28%,
+            rgba(131,197,161,.13) 0 150px,
+            transparent 151px),
+
+        radial-gradient(circle at 17% 75%,
+            rgba(162,213,184,.14) 0 110px,
+            transparent 111px),
+
+        radial-gradient(circle at 82% 88%,
+            rgba(79,155,114,.09) 0 190px,
+            transparent 191px),
+
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #f0f9f4
+        );
+}
+
+.contenedor-login {
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding: 70px 28px 90px;
+}
+
+.zona {
+    display: flex;
+
+    justify-content: center;
+}
+
+.panel {
+    width: 100%;
+    max-width: 980px;
+
+    display: grid;
+
+    grid-template-columns: .9fr 1.1fr;
+
+    overflow: hidden;
+
+    background: white;
+
+    border:
+        1px solid var(--verde-100);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 25px 60px rgba(36,86,63,.10);
+}
+
+
+/* panel verde */
+
+.presentacion {
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 570px;
+
+    padding: 55px 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--verde-800),
+            var(--verde-600)
+        );
+
+    color: white;
+}
+
+.presentacion::before {
+    content: "";
+
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    right: -140px;
+    top: -100px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.07);
+}
+
+.presentacion::after {
+    content: "";
+
+    position: absolute;
+
+    width: 160px;
+    height: 160px;
+
+    left: -80px;
+    bottom: -60px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.05);
+}
+
+.presentacion > div {
+    position: relative;
+
+    z-index: 2;
+}
+
+.presentacion h1 {
+    max-width: 14ch;
+
+    color: white;
+
+    font-size: 34px;
+}
+
+.presentacion p {
+    margin-top: 16px;
+
+    color: #d7ebdf;
+
+    line-height: 1.8;
+}
+
+.lista-beneficios {
+    margin: 32px 0 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+.lista-beneficios li {
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    color: #e3f1e9;
+
+    font-size: 13px;
+}
+
+.marca-check {
+    width: 23px;
+    height: 23px;
+
+    display: grid;
+    place-items: center;
+
+    background:
+        rgba(255,255,255,.1);
+
+    border:
+        1px solid rgba(255,255,255,.2);
+
+    border-radius: 50%;
+}
+
+
+/* formularios */
+
+.formularios {
+    padding: 48px;
+
+    background: white;
+}
+
+.pestanas {
+    margin-bottom: 32px;
+    padding: 5px;
+
+    display: flex;
+
+    background: var(--verde-50);
+
+    border-radius: 10px;
+}
+
+.pestanas button {
+    flex: 1;
+
+    min-height: 42px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: var(--verde-700);
+
+    font-family: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.pestanas button[aria-selected="true"] {
+    background: white;
+
+    color: var(--verde-900);
+
+    box-shadow:
+        0 3px 10px rgba(36,86,63,.08);
+}
+
+.formularios h2 {
+    font-size: 25px;
+}
+
+.sub {
+    margin: 7px 0 25px;
+
+    color: var(--texto-suave);
+
+    font-size: 13px;
+}
+
+
+/* pasos */
+
+.franja-pasos {
+    margin-top: 80px;
+}
+
+.titulo-seccion {
+    margin-bottom: 38px;
+
+    text-align: center;
+}
+
+.titulo-seccion .etiqueta {
+    color: var(--verde-600);
+
+    font-size: 10px;
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+    text-transform: uppercase;
+}
+
+.titulo-seccion h2 {
+    margin-top: 8px;
+
+    font-size: 30px;
+}
+
+.franja-pasos .pasos {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 20px;
+}
+
+.franja-pasos .paso {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 28px;
+
+    background:
+        rgba(255,255,255,.88);
+
+    border:
+        1px solid var(--verde-100);
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 10px 30px rgba(36,86,63,.04);
+}
+
+.franja-pasos .paso::after {
+    content: "";
+
+    position: absolute;
+
+    width: 90px;
+    height: 90px;
+
+    right: -45px;
+    bottom: -45px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(131,197,161,.10);
+}
+
+.paso-num {
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 20px;
+
+    background: var(--verde-50);
+
+    border:
+        1px solid var(--verde-200);
+
+    border-radius: 50%;
+
+    color: var(--verde-800);
+
+    font-weight: 700;
+}
+
+.franja-pasos .paso h3 {
+    margin-bottom: 8px;
+
+    font-family: 'Inter',sans-serif;
+
+    font-size: 14px;
+}
+
+.franja-pasos .paso p {
+    color: var(--texto-suave);
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+/* contacto footer */
+
+.pie-3col {
+    grid-template-columns:
+        1.4fr .8fr 1fr;
+}
+
+
+/* responsive */
+
+@media (max-width: 750px) {
+    .panel {
+        grid-template-columns: 1fr;
+    }
+
+    .presentacion {
+        min-height: auto;
+
+        padding: 40px 30px;
+    }
+
+    .formularios {
+        padding: 35px 25px;
+    }
+
+    .franja-pasos .pasos {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+.login-barra {
+    max-width: 1450px;
+
+    min-height: 82px;
+
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+
+
+
+.logo-foodraneo {
+    margin-left: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    color: #FFFFFF;
+
+    text-decoration: none;
+}
+
+
+.logo-foodraneo-icono {
+    width: 48px;
+    height: 48px;
+
+    display: grid;
+
+    place-items: center;
+
+    background: #9AD8B1;
+
+    border-radius: 12px;
+
+    color: #24563F;
+
+    box-shadow:
+        0 5px 15px
+        rgba(20, 67, 47, .14);
+}
+
+
+.logo-foodraneo-icono svg {
+    width: 28px;
+    height: 28px;
+}
+
+
+.logo-foodraneo-texto {
+    font-family:
+        'Lora',
+        Georgia,
+        serif;
+
+    font-size: 27px;
+
+    font-weight: 700;
+
+    letter-spacing: -.4px;
+}
+
+
+
+.login-barra .nav-iconos {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+.login-barra .nav-icono {
+    min-height: 44px;
+
+    padding:
+        0 13px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    border-radius: 9px;
+
+    color: #DDF2E6;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    text-decoration: none;
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        transform .2s ease;
+}
+
+
+.login-barra .nav-icono svg {
+    width: 19px;
+    height: 19px;
+}
+
+
+.login-barra .nav-icono:hover {
+    background:
+        rgba(255,255,255,.11);
+
+    color: white;
+
+    transform:
+        translateY(-1px);
+}
+
+
+
+
+@media (max-width: 900px) {
+
+    .login-barra .nav-icono span {
+        display: none;
+    }
+
+    .login-barra .nav-icono {
+        width: 40px;
+
+        padding: 0;
+
+        justify-content: center;
+    }
+
+    .logo-foodraneo-texto {
+        font-size: 21px;
+    }
+
+    .logo-foodraneo-icono {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+
+@media (max-width: 550px) {
+
+    .login-barra {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .login-barra .nav-icono {
+        width: 33px;
+    }
+
+    .logo-foodraneo {
+        gap: 6px;
+    }
+
+    .logo-foodraneo-texto {
+        font-size: 15px;
+    }
+
+    .logo-foodraneo-icono {
+        width: 31px;
+        height: 31px;
+    }
+
+    .logo-foodraneo-icono svg {
+        width: 19px;
+        height: 19px;
+    }
+}
+
+/* ============================================
+   CORRECCIÓN DEL FOOTER EN LOGIN
+============================================ */
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+body > main {
+    flex: 1 0 auto;
+    width: 100%;
+}
+
+/* Pie de página */
+
+.pie-sitio {
+    width: 100%;
+    margin-top: auto;
+    flex-shrink: 0;
+}
+
+.pie-sitio .pie-in {
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+    padding: 50px 0 40px;
+
+    display: grid;
+    grid-template-columns: 1.5fr 0.8fr 0.8fr 1fr;
+    gap: 40px;
+
+    align-items: start;
+}
+
+.pie-sitio .pie-col h4 {
+    margin: 0 0 18px;
+    color: #FFFFFF;
+    font-size: 15px;
+}
+
+.pie-sitio .pie-col ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pie-sitio .pie-col li {
+    margin-bottom: 12px;
+    font-size: 13px;
+}
+
+.pie-sitio .footer-marca p {
+    max-width: 310px;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.pie-sitio .pie-marca {
+    font-size: 24px;
+    margin-bottom: 18px;
+}
+
+.pie-sitio .pie-abajo-in {
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+@media (max-width: 850px) {
+    .pie-sitio .pie-in {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 35px;
+    }
+}
+
+@media (max-width: 520px) {
+    .pie-sitio .pie-in {
+        grid-template-columns: 1fr;
+    }
+
+    .pie-sitio .pie-abajo-in {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

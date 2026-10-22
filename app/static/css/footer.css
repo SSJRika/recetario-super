@@ -1,0 +1,377 @@
+/* ============================================================
+
+   21. FOOTER
+
+============================================================ */
+
+.pie-sitio,
+
+.landing-footer {
+
+    position: relative;
+
+    overflow: hidden;
+
+    width: 100%;
+
+    margin-top: auto;
+
+    flex-shrink: 0;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            var(--verde-900),
+
+            var(--verde-700)
+
+        );
+
+    color: #D9EEE3;
+
+}
+
+/* burbujas del footer */
+
+.pie-sitio::before,
+
+.landing-footer::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+
+    height: 300px;
+
+    left: -155px;
+
+    top: -170px;
+
+    border-radius: 50%;
+
+    background:
+
+        rgba(255,255,255,.055);
+
+}
+
+.pie-sitio::after,
+
+.landing-footer::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 430px;
+
+    height: 430px;
+
+    right: -220px;
+
+    bottom: -280px;
+
+    border-radius: 50%;
+
+    background:
+
+        rgba(255,255,255,.045);
+
+}
+
+/* columnas */
+
+/* CONTENEDOR DE COLUMNAS DEL FOOTER */
+
+.pie-in {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding: 45px 28px;
+
+    display: grid;
+
+    grid-template-columns: 1.5fr 1fr 1fr;
+
+    gap: 50px;
+
+    align-items: start;
+
+}
+
+/* FOOTER DE TRES COLUMNAS */
+
+.pie-in.pie-3col {
+
+    grid-template-columns: 1.5fr 1fr 1fr;
+
+}
+
+/* FOOTER DE CUATRO COLUMNAS */
+
+.pie-in.pie-4col {
+
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+
+}
+
+/* ============================================
+
+   RESPONSIVE - TABLET
+
+============================================ */
+
+/* ============================================
+
+   RESPONSIVE - CELULAR
+
+============================================ */
+
+/* CONTENIDO PRINCIPAL */
+
+body > main,
+
+body > .contenedor-login {
+
+    flex: 1 0 auto;
+
+}
+
+/* marca footer */
+
+.pie-marca {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 13px;
+
+    color: white;
+
+    font-family:
+
+        'Lora',
+
+        serif;
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+}
+
+.footer-marca p,
+
+.pie-in > div:first-child > p {
+
+    max-width: 35ch;
+
+    margin: 0;
+
+    color:
+
+        #BDD7CA;
+
+    font-size: 12px;
+
+    line-height: 1.8;
+
+}
+
+/* columnas */
+
+.pie-col h4 {
+
+    margin:
+
+        0 0 16px;
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    letter-spacing: .3px;
+
+}
+
+.pie-col ul {
+
+    margin: 0;
+
+    padding: 0;
+
+    list-style: none;
+
+}
+
+.pie-col li {
+
+    margin-bottom: 10px;
+
+    color:
+
+        #BDD7CA;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+}
+
+.pie-col a {
+
+    color:
+
+        #BDD7CA;
+
+    text-decoration: none;
+
+    transition:
+
+        color .2s ease;
+
+}
+
+.pie-col a:hover {
+
+    color: white;
+
+}
+
+/* contacto */
+
+.contacto-lista span {
+
+    display: block;
+
+    margin-bottom: 2px;
+
+    color:
+
+        var(--verde-300);
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    letter-spacing: .7px;
+
+    text-transform: uppercase;
+
+}
+
+/* parte inferior */
+
+.pie-abajo {
+
+    position: relative;
+
+    z-index: 2;
+
+    border-top:
+
+        1px solid
+
+        rgba(255,255,255,.09);
+
+}
+
+.pie-abajo-in {
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    padding:
+
+        17px 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+
+        space-between;
+
+    gap: 20px;
+
+    color:
+
+        #A8C7B7;
+
+    font-size: 11px;
+
+}
+
+.enlaces-legales {
+
+    display: flex;
+
+    gap: 18px;
+
+}
+
+.enlaces-legales a {
+
+    color:
+
+        #A8C7B7;
+
+    text-decoration: none;
+
+}
+
+.enlaces-legales a:hover {
+
+    color: white;
+
+}
+
+/* Distribución responsive, definida una sola vez */
+@media (max-width: 1050px) {
+    .pie-sitio > .pie-in,
+    .pie-sitio > .pie-in.pie-3col,
+    .pie-sitio > .pie-in.pie-4col {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 30px;
+    }
+}
+@media (max-width: 580px) {
+    .pie-sitio > .pie-in,
+    .pie-sitio > .pie-in.pie-3col,
+    .pie-sitio > .pie-in.pie-4col {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding: 45px 20px 35px;
+    }
+    .pie-abajo-in {
+        padding: 17px 20px;
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .enlaces-legales {
+        flex-direction: column;
+        gap: 7px;
+    }
+}

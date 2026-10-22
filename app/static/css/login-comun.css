@@ -1,0 +1,77 @@
+/* ============================================================
+
+   13. PESTAÑAS LOGIN
+
+============================================================ */
+
+.pestanas {
+
+    padding: 5px;
+
+    display: flex;
+
+    gap: 4px;
+
+    background:
+
+        var(--verde-50);
+
+    border:
+
+        1px solid
+
+        var(--verde-100);
+
+    border-radius: 10px;
+
+}
+
+.pestanas button {
+
+    flex: 1;
+
+    min-height: 42px;
+
+    padding:
+
+        8px 12px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background:
+
+        transparent;
+
+    color:
+
+        var(--verde-700);
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+}
+
+.pestanas button[aria-selected="true"] {
+
+    background:
+
+        white;
+
+    color:
+
+        var(--verde-900);
+
+    box-shadow:
+
+        0 3px 12px
+
+        rgba(40,102,75,.09);
+
+}

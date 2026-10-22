@@ -3,57 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Iniciar sesión · Recetario</title>
+<title>Iniciar sesión · Food-raneo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+
 <link rel="stylesheet" href="/static/css/estilos.css">
-<style>
-  body{ min-height:100vh; display:flex; flex-direction:column; }
-  .barra-simple{ background:var(--marino); border-bottom:1px solid rgba(255,255,255,.06); }
-  .barra-simple .barra-in{ max-width:1080px; margin:0 auto; padding:0 24px; height:64px; display:flex; align-items:center; }
-  .zona{ flex:1; display:flex; align-items:center; justify-content:center; padding:50px 24px; }
-  .panel{
-    width:100%; max-width:960px; display:grid; grid-template-columns:1.05fr 1fr;
-    background:var(--papel); border:1px solid var(--linea); border-radius:var(--radio);
-    overflow:hidden; box-shadow:var(--sombra);
-  }
-  .presentacion{ background:var(--marino); color:#E7F3EA; padding:44px 38px; display:flex; flex-direction:column; justify-content:space-between; }
-  .presentacion h1{ color:#fff; font-size:26px; max-width:19ch; }
-  .presentacion p{ color:#BFDBC9; margin-top:14px; font-size:14.5px; max-width:34ch; }
-  .lista-beneficios{ list-style:none; margin:26px 0 0; padding:0; display:flex; flex-direction:column; gap:14px; }
-  .lista-beneficios li{ display:flex; gap:11px; align-items:flex-start; font-size:13.5px; color:#D6ECDD; }
-  .lista-beneficios li .marca-check{
-    width:20px; height:20px; border-radius:5px; flex:none; margin-top:1px;
-    background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.22);
-    display:grid; place-items:center; font-size:11px; color:#fff;
-  }
-  .formularios{ padding:40px 40px 34px; }
-  .pestanas{ display:flex; background:var(--fondo); border-radius:7px; padding:4px; margin-bottom:24px; }
-  .pestanas button{
-    flex:1; padding:10px; border:0; background:transparent; border-radius:5px;
-    font-family:inherit; font-size:14px; font-weight:600; color:var(--gris); cursor:pointer;
-  }
-  .pestanas button[aria-selected="true"]{ background:var(--papel); color:var(--tinta); box-shadow:0 1px 3px rgba(30,43,35,.12); }
-  .formularios h2{ font-size:20px; }
-  .sub{ color:var(--gris); font-size:13.5px; margin:6px 0 20px; }
-  .oculto{ display:none; }
-  @media (max-width:760px){
-    .panel{ grid-template-columns:1fr; }
-    .presentacion{ display:none; }
-    .zona{ padding:30px 18px; }
-    .formularios{ padding:32px 26px; }
-  }
-</style>
+<link rel="stylesheet" href="/static/css/login.css">
+<link rel="stylesheet" href="/static/css/footer.css">
+
+
 </head>
-<body>
+<script src="/static/js/menu-activo.js" defer></script>
+<body class="pagina-login">
 
-<header class="barra-simple">
-  <div class="barra-in">
-    <a class="marca" href="/login"><span class="marca-icono">R</span>Recetario</a>
-  </div>
-</header>
 
+
+{% include "partials/header.html" %}
+
+<div class="contenedor-login">
 <div class="zona">
   <div class="panel">
 
@@ -91,7 +60,7 @@
 
         <button class="boton boton-marino boton-bloque" onclick="login()">Iniciar sesión</button>
       </div>
-
+ 
       <div id="panel-crear" class="oculto">
         <h2>Crea tu cuenta</h2>
         <p class="sub">Empieza a registrar tu despensa.</p>
@@ -117,8 +86,135 @@
   </div>
 </div>
 
+<section class="franja-pasos">
+  <div class="titulo-seccion">
+    <span class="etiqueta">Cómo funciona</span>
+    <h2>Tres pasos y ya estás dentro</h2>
+  </div>
+  <div class="pasos">
+    <div class="paso">
+      <div class="paso-num">1</div>
+      <h3>Crea tu cuenta</h3>
+      <p>Con tu correo y una contraseña, en menos de un minuto.</p>
+    </div>
+    <div class="paso">
+      <div class="paso-num">2</div>
+      <h3>Agrega tu despensa</h3>
+      <p>A mano o con foto: la IA identifica el producto por ti.</p>
+    </div>
+    <div class="paso">
+      <div class="paso-num">3</div>
+      <h3>Recibe tus avisos</h3>
+      <p>Sabrás qué está por caducar antes de que se te olvide.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<footer class="pie-sitio">
+
+    <div class="pie-in pie-3col">
+
+        <div>
+            <div class="pie-marca">
+                <span class="marca-icono">
+                    <svg viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="1.5">
+                        <circle cx="12" cy="12" r="5.6"/>
+                        <circle cx="12" cy="12" r="2.9"/>
+                        <path d="M3 4v4a1.5 1.5 0 0 0 3 0V4M4.5 9.5V20"/>
+                        <path d="M21 20V4c-1.6 1.2-2.2 3.4-2.2 6.5H21"/>
+                    </svg>
+                </span>
+
+                Food-raneo
+            </div>
+
+            <p>
+                Organiza tu despensa, controla tus alimentos
+                y aprovecha mejor lo que tienes en casa.
+            </p>
+        </div>
+
+
+        <div class="pie-col">
+            <h4>Navegación</h4>
+
+            <ul>
+                <li><a href="/">Inicio</a></li>
+                <li><a href="/carrito">Carrito</a></li>
+                <li><a href="/perfil">Mi perfil</a></li>
+            </ul>
+        </div>
+
+
+        <div class="pie-col">
+            <h4>Mi cuenta</h4>
+
+            <ul>
+                <li><a href="/perfil">Mi perfil</a></li>
+
+                
+                <li>
+                    <a href="#" onclick="logout()">
+                        Cerrar sesión
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="pie-col">
+            <h4>Contáctanos</h4>
+
+            <ul class="contacto-lista">
+                <li>
+                    <span>Correo</span>
+                    food-raneo@alumnos.uaq.mx
+                </li>
+
+                <li>
+                    <span>Teléfono</span>
+                    +52 442 361 7716
+                </li>
+
+                <li>
+                    <span>Horario</span>
+                    Lunes a viernes · 9:00 – 18:00
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    <div class="pie-abajo">
+
+        <div class="pie-abajo-in">
+
+            <span>
+                © 2026 Food-raneo. Todos los derechos reservados.
+            </span>
+
+            <div class="enlaces-legales">
+                <a href="#">Aviso de privacidad</a>
+                <a href="#">Términos de uso</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</footer>
+
 <script src="/static/js/auth.js"></script>
 <script>
+if (window.location.hash === "#crear") {
+  document.addEventListener("DOMContentLoaded", () => cambiar("crear"));
+}
+
 function cambiar(cual){
   var entrar = cual === 'entrar';
   document.getElementById('panel-entrar').classList.toggle('oculto', !entrar);
@@ -175,3 +271,4 @@ async function registrar(){
 }
 </script>
 </body>
+</html>

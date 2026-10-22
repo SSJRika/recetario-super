@@ -1,0 +1,77 @@
+/* ============================================================
+
+   16. CARRITO
+
+============================================================ */
+
+.item-carrito {
+
+    position: relative;
+
+    z-index: 2;
+
+    padding:
+
+        17px 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content:
+
+        space-between;
+
+    gap: 20px;
+
+    border-bottom:
+
+        1px solid
+
+        var(--borde-claro);
+
+    transition:
+
+        background .2s ease,
+
+        padding .2s ease;
+
+}
+
+.item-carrito:last-child {
+
+    border-bottom: 0;
+
+}
+
+.item-carrito:hover {
+
+    padding-left: 10px;
+
+    padding-right: 10px;
+
+    background:
+
+        rgba(217,240,226,.58);
+
+    border-radius: 9px;
+
+}
+
+.nombre-carrito {
+
+    color:
+
+        var(--texto);
+
+    font-weight: 600;
+
+}
+
+.acciones-carrito {
+
+    display: flex;
+
+    gap: 8px;
+
+}

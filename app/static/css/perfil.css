@@ -1,0 +1,770 @@
+
+body .lienzo > .tarjeta {
+    position: relative;
+
+    overflow: hidden;
+
+    max-width: 650px !important;
+
+    padding: 35px;
+
+    background:
+        rgba(255,255,255,.94);
+}
+
+body .lienzo > .tarjeta::after {
+    content: "";
+
+    position: absolute;
+
+    width: 230px;
+    height: 230px;
+
+    right: -130px;
+    top: -130px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(105,180,136,.10);
+
+    pointer-events: none;
+}
+
+body .perfil-top {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+
+    margin-bottom: 28px;
+
+    padding-bottom: 27px;
+
+    border-bottom:
+        1px solid var(--verde-100);
+}
+
+body .avatar {
+    width: 82px;
+    height: 82px;
+
+    flex: none;
+
+    display: grid;
+    place-items: center;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--verde-800),
+            var(--verde-500)
+        );
+
+    border:
+        5px solid var(--verde-50);
+
+    border-radius: 50%;
+
+    color: white;
+
+    font-family: 'Lora',serif;
+
+    font-size: 40px;
+
+    box-shadow:
+        0 8px 20px rgba(36,86,63,.14);
+}
+
+body .perfil-top h2 {
+    color: var(--texto);
+
+    font-size: 24px;
+}
+
+body .correo {
+    margin-top: 5px;
+
+    color: var(--texto-suave);
+
+    font-size: 13px;
+}
+
+body .lienzo > .tarjeta > .boton {
+    position: relative;
+
+    z-index: 2;
+}
+
+@media (max-width: 500px) {
+    body .perfil-top {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+}
+
+/* =========================================================
+   PERFIL — DISTRIBUCIÓN VERTICAL
+========================================================= */
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+body .lienzo {
+    width: 100%;
+
+    flex: 1 0 auto;
+}
+
+
+body .pie-sitio {
+    width: 100%;
+
+    margin-top: auto;
+
+    flex-shrink: 0;
+}
+
+
+/* tarjeta del perfil */
+
+body .lienzo > .tarjeta {
+    max-width: 650px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* ==========================================
+   FOOD-RANEO - PERFIL DE USUARIO
+========================================== */
+
+.perfil-pagina {
+    flex: 1 0 auto;
+    width: 100%;
+}
+
+.perfil-contenedor {
+    width: min(900px, 100%);
+    margin: 25px auto 65px;
+}
+
+/* RESUMEN DEL USUARIO */
+
+.perfil-resumen {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    flex-wrap: wrap;
+
+    padding: 30px;
+    margin-bottom: 24px;
+
+    background: #FFFFFF;
+    border: 1px solid #BFDCCB;
+    border-radius: 20px;
+
+    box-shadow: 0 12px 35px rgba(36,86,63,.07);
+}
+
+.perfil-avatar-contenedor {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.perfil-resumen .avatar,
+.perfil-resumen .perfil-foto {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+}
+
+.perfil-resumen .avatar {
+    display: grid;
+    place-items: center;
+
+    background: linear-gradient(
+        135deg,
+        #28664B,
+        #58AD7D
+    );
+
+    color: white;
+    font-family: "Lora", serif;
+    font-size: 31px;
+    font-weight: 600;
+}
+
+.perfil-resumen .perfil-foto {
+    display: block;
+    object-fit: cover;
+    border: 3px solid #D9F0E2;
+}
+
+.perfil-resumen .perfil-foto[hidden] {
+    display: none !important;
+}
+
+.perfil-resumen-datos {
+    flex: 1;
+    min-width: 170px;
+}
+
+.perfil-etiqueta {
+    color: #3E8B65;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.perfil-resumen-datos h2 {
+    margin: 8px 0 5px;
+    color: #24563F;
+    font-family: "Lora", serif;
+    font-size: 26px;
+}
+
+.perfil-resumen-datos .correo {
+    margin: 0;
+    color: #587064;
+    font-size: 14px;
+}
+
+.perfil-boton-foto {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px 18px;
+    border: 1px solid #70BC8D;
+    border-radius: 10px;
+
+    background: #E7F5EC;
+    color: #24563F;
+
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.perfil-boton-foto:hover {
+    background: #CDEBD8;
+}
+
+/* PESTAÑAS */
+
+.perfil-pestanas {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.perfil-tab {
+    flex: 1;
+    min-width: 145px;
+
+    padding: 15px 18px;
+    border: 1px solid #BFDCCB;
+    border-radius: 12px;
+
+    background: #FFFFFF;
+    color: #28664B;
+
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: background .2s, color .2s;
+}
+
+.perfil-tab:hover {
+    background: #E7F5EC;
+}
+
+.perfil-tab.activo {
+    background: #28664B;
+    color: #FFFFFF;
+    border-color: #28664B;
+}
+
+.perfil-tab:focus-visible,
+.perfil-guardar:focus-visible,
+.perfil-boton-foto:focus-visible {
+    outline: 3px solid #70BC8D;
+    outline-offset: 3px;
+}
+
+/* PANELES */
+
+.perfil-panel {
+    padding: 35px 40px;
+
+    background: #FFFFFF;
+    border: 1px solid #BFDCCB;
+    border-radius: 20px;
+
+    box-shadow: 0 12px 35px rgba(36,86,63,.06);
+}
+
+.perfil-panel[hidden] {
+    display: none !important;
+}
+
+.perfil-panel-encabezado {
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #D9F0E2;
+}
+
+.perfil-panel-encabezado h3 {
+    margin: 0 0 8px;
+    color: #24563F;
+    font-family: "Lora", serif;
+    font-size: 25px;
+}
+
+.perfil-panel-encabezado p {
+    margin: 0;
+    color: #587064;
+    font-size: 14px;
+}
+
+/* FORMULARIOS */
+
+.perfil-formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.perfil-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    min-width: 0;
+}
+
+.perfil-campo label {
+    color: #24563F;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.perfil-campo input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 47px;
+
+    padding: 12px 15px;
+    border: 1px solid #BFDCCB;
+    border-radius: 10px;
+
+    background: #F8FCF9;
+    color: #214334;
+
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+}
+
+.perfil-campo input:focus {
+    outline: none;
+    border-color: #3E8B65;
+    box-shadow: 0 0 0 3px rgba(88,173,125,.15);
+}
+
+.perfil-fila {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.perfil-aviso {
+    margin: 0;
+    color: #587064;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.perfil-guardar {
+    align-self: flex-start;
+    padding: 13px 25px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #28664B;
+    color: #FFFFFF;
+
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.perfil-guardar:hover {
+    background: #347A59;
+}
+
+.perfil-mensaje {
+    min-height: 18px;
+    margin: 0;
+
+    color: #28664B;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* SESIÓN */
+
+.perfil-sesion {
+    margin-top: 35px;
+    padding-top: 25px;
+    border-top: 1px solid #D9F0E2;
+}
+
+.perfil-sesion h4 {
+    margin: 0 0 8px;
+    color: #24563F;
+}
+
+.perfil-sesion p {
+    margin-bottom: 15px;
+    color: #587064;
+    font-size: 13px;
+}
+
+.perfil-salir {
+    padding: 12px 20px;
+    border: 1px solid #BFDCCB;
+    border-radius: 10px;
+
+    background: #F8FCF9;
+    color: #24563F;
+
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.perfil-salir:hover {
+    background: #E7F5EC;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 650px) {
+    .perfil-contenedor {
+        margin-top: 20px;
+    }
+
+    .perfil-resumen {
+        padding: 23px;
+        gap: 16px;
+    }
+
+    .perfil-resumen .avatar,
+    .perfil-resumen .perfil-foto {
+        width: 72px;
+        height: 72px;
+    }
+
+    .perfil-resumen-datos h2 {
+        font-size: 21px;
+    }
+
+    .perfil-boton-foto {
+        width: 100%;
+    }
+
+    .perfil-panel {
+        padding: 25px 20px;
+    }
+
+    .perfil-fila {
+        grid-template-columns: 1fr;
+    }
+
+    .perfil-tab {
+        min-width: 100%;
+    }
+}
+
+
+/* ==========================================
+   FOOD-RANEO - BOTONES DEL PERFIL
+========================================== */
+
+/* CONTENEDOR DE PESTAÑAS */
+
+.perfil-pestanas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    width: 100%;
+    margin: 0 0 24px;
+    padding: 7px;
+
+    background: #E7F5EC;
+    border: 1px solid #CDEBD8;
+    border-radius: 16px;
+}
+
+/* BOTONES DE NAVEGACIÓN */
+
+.perfil-pestanas .perfil-tab {
+    appearance: none;
+    -webkit-appearance: none;
+
+    flex: 1 1 160px;
+    min-height: 48px;
+
+    padding: 13px 20px;
+
+    border: 1px solid transparent;
+    border-radius: 11px;
+
+    background: #FFFFFF;
+    color: #28664B;
+
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    text-align: center;
+    cursor: pointer;
+
+    box-shadow: 0 2px 8px rgba(36,86,63,.05);
+
+    transition:
+        background .2s ease,
+        color .2s ease,
+        box-shadow .2s ease,
+        transform .2s ease;
+}
+
+/* EFECTO AL PASAR EL CURSOR */
+
+.perfil-pestanas .perfil-tab:hover {
+    background: #D9F0E2;
+    color: #24563F;
+    transform: translateY(-2px);
+}
+
+/* PESTAÑA SELECCIONADA */
+
+.perfil-pestanas .perfil-tab.activo,
+.perfil-pestanas .perfil-tab[aria-selected="true"] {
+    background: #28664B;
+    color: #FFFFFF;
+    border-color: #28664B;
+
+    box-shadow: 0 4px 12px rgba(36,86,63,.18);
+}
+
+/* BOTÓN CAMBIAR FOTO */
+
+.perfil-resumen .perfil-boton-foto {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 44px;
+    padding: 11px 20px;
+
+    border: 1px solid #70BC8D;
+    border-radius: 11px;
+
+    background: #E7F5EC;
+    color: #24563F;
+
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+
+    text-decoration: none;
+    cursor: pointer;
+
+    transition: background .2s ease;
+}
+
+.perfil-resumen .perfil-boton-foto:hover {
+    background: #CDEBD8;
+}
+
+/* BOTÓN REVISAR CAMBIOS */
+
+.perfil-formulario .perfil-guardar {
+    appearance: none;
+    -webkit-appearance: none;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+
+    min-height: 46px;
+    padding: 13px 26px;
+
+    border: 1px solid #28664B;
+    border-radius: 11px;
+
+    background: #28664B;
+    color: #FFFFFF;
+
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 14px rgba(36,86,63,.14);
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+.perfil-formulario .perfil-guardar:hover {
+    background: #347A59;
+    transform: translateY(-2px);
+}
+
+/* BOTÓN CERRAR SESIÓN */
+
+.perfil-sesion .perfil-salir {
+    appearance: none;
+
+    min-height: 44px;
+    padding: 12px 22px;
+
+    border: 1px solid #BFDCCB;
+    border-radius: 11px;
+
+    background: #FFFFFF;
+    color: #24563F;
+
+    font-family: "Inter", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.perfil-sesion .perfil-salir:hover {
+    background: #E7F5EC;
+}
+
+/* ACCESIBILIDAD */
+
+.perfil-tab:focus-visible,
+.perfil-guardar:focus-visible,
+.perfil-salir:focus-visible,
+.perfil-boton-foto:focus-visible {
+    outline: 3px solid #70BC8D;
+    outline-offset: 3px;
+}
+
+/* CELULARES */
+
+@media (max-width: 650px) {
+
+    .perfil-pestanas {
+        flex-direction: column;
+    }
+
+    .perfil-pestanas .perfil-tab {
+        flex: 0 0 auto;
+        width: 100%;
+        min-height: 46px;
+    }
+
+    .perfil-formulario .perfil-guardar {
+        width: 100%;
+    }
+}
+
+
+/* ==========================================
+   ESTABILIDAD DEL FOOTER EN MI PERFIL
+========================================== */
+
+/* ESTRUCTURA GENERAL */
+
+body:has(.perfil-pagina) {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* EL CONTENIDO OCUPA EL ESPACIO DISPONIBLE */
+
+body:has(.perfil-pagina) > main.perfil-pagina {
+    flex: 1 0 auto;
+    width: 100%;
+}
+
+/* CONTENEDOR DEL PERFIL */
+
+.perfil-pagina .perfil-contenedor {
+    width: min(900px, 100%);
+    margin: 25px auto 65px;
+}
+
+/* RESERVAR ESPACIO PARA LAS PESTAÑAS */
+
+.perfil-pagina .perfil-panel {
+    box-sizing: border-box;
+    min-height: 610px;
+}
+
+/* OCULTAR LOS PANELES NO SELECCIONADOS */
+
+.perfil-pagina .perfil-panel[hidden] {
+    display: none !important;
+}
+
+/* FOOTER DEBAJO DEL CONTENIDO */
+
+body:has(.perfil-pagina) > footer.pie-sitio {
+    margin-top: auto;
+    flex-shrink: 0;
+    width: 100%;
+}
+
+/* TABLET */
+
+@media (max-width: 850px) {
+
+    .perfil-pagina .perfil-panel {
+        min-height: 660px;
+    }
+
+}
+
+/* CELULARES */
+
+@media (max-width: 650px) {
+
+    .perfil-pagina .perfil-panel {
+        min-height: 0;
+    }
+
+    .perfil-pagina .perfil-contenedor {
+        margin-bottom: 45px;
+    }
+
+}
