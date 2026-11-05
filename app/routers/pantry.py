@@ -162,7 +162,7 @@ def marcar_agotado(
     session.commit()
     return {"detail": f"{item.nombre_detectado} marcado como agotado y agregado al carrito"}
 from fastapi import File, UploadFile
-from app.ai_vision import detectar_producto
+from app.ai_vision import detectar_producto, detectar_productos
 
 @router.post("/detectar-foto")
 async def detectar_producto_foto(
@@ -195,3 +195,41 @@ async def detectar_producto_foto(
         "dias_vida_util": dias_vida_util,
         "emoji": get_emoji(nombre_detectado),
     }
+@router.post("/detectar-productos")
+async def detectar_productos_foto(
+    file: UploadFile = File(...),
+    session: Session = Depends(get_session),
+    current_user: User = Depends(get_current_user),
+):
+    contenido = await file.read()
+    detectados = detectar_productos(contenido, media_type=file.content_type)
+
+    resultado = []
+
+    for producto in detectados:
+        fecha_estimada = None
+
+        if producto["dias_vida_util"]:
+            fecha_estimada = date.today() + timedelta(days=producto["dias_vida_util"])
+
+        item = PantryItem(
+            user_id=current_user.id,
+            nombre_detectado=producto["nombre"],
+            cantidad=producto["cantidad"],
+            unidad="pieza",
+            fecha_caducidad_estimada=fecha_estimada,
+            origen="foto_ia",
+        )
+        session.add(item)
+        session.flush()
+
+        resultado.append({
+            "id": item.id,
+            "nombre_detectado": producto["nombre"],
+            "cantidad": producto["cantidad"],
+            "dias_vida_util": producto["dias_vida_util"],
+            "emoji": get_emoji(producto["nombre"]),
+        })
+
+    session.commit()
+    return {"productos": resultado}

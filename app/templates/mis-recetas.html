@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -36,8 +35,9 @@
             <h1>Mis recetas</h1>
 
             <p>
-                Explora recetas, guarda tus favoritas
-                y consulta los ingredientes y pasos
+                Genera recetas con los productos de tu
+                refrigerador, guarda tus favoritas y
+                consulta los ingredientes y pasos
                 de preparación.
             </p>
 
@@ -47,13 +47,23 @@
 
             <div class="extra-seccion-titulo">
                 <div>
-                    <h2>Recetas disponibles</h2>
+                    <h2>Recetas para ti</h2>
                     <p>
-                        Selecciona una receta para ver
-                        cómo prepararla.
+                        Generadas con lo que tienes en tu
+                        refrigerador, dando prioridad a lo
+                        que caduca primero.
                     </p>
                 </div>
+
+                <button
+                    type="button"
+                    id="generar-recetas"
+                    class="extra-boton">
+                    ✨ Generar recetas
+                </button>
             </div>
+
+            <p id="estado-recetas" class="extra-vacio"></p>
 
             <div
                 id="catalogo-recetas"
@@ -139,6 +149,8 @@
             <h3>Preparación</h3>
 
             <ol id="detalle-receta-pasos"></ol>
+
+            <div id="detalle-receta-acciones"></div>
 
         </div>
 

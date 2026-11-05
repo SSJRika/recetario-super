@@ -1,170 +1,15 @@
-
 /* ==========================================
-   FOOD-RANEO - PÁGINA MIS RECETAS
+   FOOD-RANEO - PÁGINA MIS RECETAS (IA)
+   Las recetas las genera la IA con lo que hay
+   en el refrigerador del usuario.
 ========================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const CLAVE = "food-raneo-recetas-favoritas";
-
-    const recetas = [
-        {
-            id: "ensalada",
-            nombre: "Ensalada fresca",
-            emoji: "🥗",
-            tiempo: "15 minutos",
-            descripcion: "Una ensalada sencilla con verduras frescas.",
-            ingredientes: [
-                "Lechuga",
-                "Jitomate",
-                "Pepino",
-                "Limón",
-                "Sal al gusto"
-            ],
-            pasos: [
-                "Lava y desinfecta las verduras.",
-                "Corta el jitomate, la lechuga y el pepino.",
-                "Coloca los ingredientes en un recipiente.",
-                "Agrega limón y sal al gusto.",
-                "Mezcla y sirve."
-            ]
-        },
-        {
-            id: "pasta",
-            nombre: "Pasta con tomate",
-            emoji: "🍝",
-            tiempo: "25 minutos",
-            descripcion: "Pasta con salsa casera de jitomate.",
-            ingredientes: [
-                "Pasta",
-                "Jitomate",
-                "Ajo",
-                "Aceite",
-                "Sal al gusto"
-            ],
-            pasos: [
-                "Hierve agua y cocina la pasta.",
-                "Pica el ajo y el jitomate.",
-                "Sofríe el ajo y agrega el jitomate.",
-                "Cocina hasta formar una salsa.",
-                "Mezcla con la pasta y sirve."
-            ]
-        },
-        {
-            id: "desayuno",
-            nombre: "Desayuno saludable",
-            emoji: "🥑",
-            tiempo: "20 minutos",
-            descripcion: "Pan tostado con aguacate y huevo.",
-            ingredientes: [
-                "Pan",
-                "Aguacate",
-                "Huevo",
-                "Sal",
-                "Pimienta"
-            ],
-            pasos: [
-                "Tuesta el pan.",
-                "Machaca el aguacate.",
-                "Cocina el huevo completamente.",
-                "Coloca el aguacate sobre el pan.",
-                "Agrega el huevo y sazona."
-            ]
-        },
-        {
-            id: "huevos",
-            nombre: "Huevos con jitomate",
-            emoji: "🍳",
-            tiempo: "15 minutos",
-            descripcion: "Desayuno rápido con huevo y verduras.",
-            ingredientes: [
-                "Huevo",
-                "Jitomate",
-                "Cebolla",
-                "Aceite",
-                "Sal"
-            ],
-            pasos: [
-                "Lava y pica las verduras.",
-                "Sofríe la cebolla y el jitomate.",
-                "Agrega los huevos.",
-                "Cocina completamente y sirve."
-            ]
-        },
-        {
-            id: "papas",
-            nombre: "Papas con cebolla",
-            emoji: "🥔",
-            tiempo: "30 minutos",
-            descripcion: "Una guarnición económica y deliciosa.",
-            ingredientes: [
-                "Papa",
-                "Cebolla",
-                "Aceite",
-                "Sal"
-            ],
-            pasos: [
-                "Lava y corta las papas.",
-                "Cocínalas hasta que estén suaves.",
-                "Corta la cebolla.",
-                "Sofríe la cebolla y agrega las papas.",
-                "Sazona y sirve."
-            ]
-        },
-        {
-            id: "sandwich",
-            nombre: "Sándwich de queso",
-            emoji: "🥪",
-            tiempo: "10 minutos",
-            descripcion: "Un sándwich sencillo para cualquier momento.",
-            ingredientes: [
-                "Pan",
-                "Queso",
-                "Jitomate",
-                "Lechuga"
-            ],
-            pasos: [
-                "Lava las verduras.",
-                "Corta el jitomate.",
-                "Coloca el queso y las verduras sobre el pan.",
-                "Cierra el sándwich y sirve."
-            ]
-        }
-    ];
+    const CLAVE_FAVORITOS = "food-raneo-recetas-favoritas-ia";
+    const CLAVE_ULTIMAS = "food-raneo-recetas-ia-ultimas";
 
     const $ = id => document.getElementById(id);
-
-    function leerFavoritos() {
-        try {
-            const datos = JSON.parse(
-                localStorage.getItem(CLAVE) || "[]"
-            );
-
-            return Array.isArray(datos)
-                ? [...new Set(datos.filter(
-                    id => recetas.some(r => r.id === id)
-                ))]
-                : [];
-
-        } catch {
-            return [];
-        }
-    }
-
-    let favoritos = leerFavoritos();
-
-    function guardarFavoritos() {
-        try {
-            localStorage.setItem(
-                CLAVE,
-                JSON.stringify(favoritos)
-            );
-        } catch {
-            alert(
-                "No se pudieron guardar los favoritos en este navegador."
-            );
-        }
-    }
 
     function crear(tipo, clase, texto) {
         const elemento = document.createElement(tipo);
@@ -178,121 +23,208 @@ document.addEventListener("DOMContentLoaded", () => {
         return elemento;
     }
 
-    function cambiarFavorito(id) {
-        if (favoritos.includes(id)) {
-            favoritos = favoritos.filter(
-                favorito => favorito !== id
+    function esReceta(dato) {
+        return (
+            dato &&
+            typeof dato.id === "string" &&
+            typeof dato.nombre === "string" &&
+            Array.isArray(dato.ingredientes) &&
+            Array.isArray(dato.pasos)
+        );
+    }
+
+    function leer(clave) {
+        try {
+            const datos = JSON.parse(
+                localStorage.getItem(clave) || "[]"
             );
+
+            return Array.isArray(datos)
+                ? datos.filter(esReceta)
+                : [];
+
+        } catch {
+            return [];
+        }
+    }
+
+    function guardar(clave, valor) {
+        try {
+            localStorage.setItem(clave, JSON.stringify(valor));
+        } catch {
+            /* sin espacio o navegador restringido */
+        }
+    }
+
+    let recetas = leer(CLAVE_ULTIMAS);
+    let favoritos = leer(CLAVE_FAVORITOS);
+
+    const esFavorita = id => favoritos.some(r => r.id === id);
+
+    function faltantes(receta) {
+        return receta.ingredientes.filter(i => !i.en_refri);
+    }
+
+    function cambiarFavorito(receta) {
+        if (esFavorita(receta.id)) {
+            favoritos = favoritos.filter(r => r.id !== receta.id);
         } else {
-            favoritos.push(id);
+            favoritos.push(receta);
         }
 
-        guardarFavoritos();
+        guardar(CLAVE_FAVORITOS, favoritos);
         renderizar();
     }
 
-    function abrirDetalle(receta) {
-        $("detalle-receta-emoji").textContent =
-            receta.emoji;
+    /* DETALLE */
 
-        $("detalle-receta-titulo").textContent =
-            receta.nombre;
+    function abrirDetalle(receta) {
+        $("detalle-receta-emoji").textContent = receta.emoji || "🍽️";
+        $("detalle-receta-titulo").textContent = receta.nombre;
 
         $("detalle-receta-tiempo").textContent =
-            "Tiempo estimado: " + receta.tiempo;
+            "Tiempo estimado: " + receta.tiempo +
+            (receta.porciones
+                ? " · " + receta.porciones + " porciones"
+                : "");
 
-        const ingredientes = $(
-            "detalle-receta-ingredientes"
-        );
-
+        const ingredientes = $("detalle-receta-ingredientes");
         const pasos = $("detalle-receta-pasos");
+        const acciones = $("detalle-receta-acciones");
 
         ingredientes.replaceChildren();
         pasos.replaceChildren();
+        acciones.replaceChildren();
 
         receta.ingredientes.forEach(item => {
-            ingredientes.append(
-                crear("li", "", item)
-            );
+            const fila = crear("li", "", item.nombre);
+
+            if (!item.en_refri) {
+                const aviso = crear("span", "", " · te falta");
+
+                aviso.style.cssText =
+                    "color:#b98a3e;font-weight:600;";
+
+                fila.append(aviso);
+            }
+
+            ingredientes.append(fila);
         });
 
         receta.pasos.forEach(paso => {
-            pasos.append(
-                crear("li", "", paso)
-            );
+            pasos.append(crear("li", "", paso));
         });
+
+        const faltan = faltantes(receta);
+
+        if (faltan.length > 0) {
+            const aviso = crear(
+                "p",
+                "",
+                "Te falta: " +
+                    faltan.map(i => i.nombre).join(", ") +
+                    ". ¿Quieres añadirlo al carrito?"
+            );
+
+            aviso.style.cssText =
+                "margin:16px 0 8px;font-weight:600;color:#7a5a1e;";
+
+            const boton = crear(
+                "button",
+                "extra-boton",
+                "🛒 Sí, agregar al carrito"
+            );
+
+            boton.type = "button";
+
+            boton.addEventListener("click", async () => {
+                boton.disabled = true;
+                boton.textContent = "Agregando...";
+
+                let agregados = 0;
+
+                for (const item of faltan) {
+                    const respuesta = await apiFetch("/shopping-list/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            nombre_producto: item.nombre
+                        })
+                    });
+
+                    if (respuesta && respuesta.ok) agregados++;
+                }
+
+                if (agregados === faltan.length) {
+                    boton.textContent = "✓ Agregado al carrito";
+                    aviso.textContent =
+                        "Listo, lo agregamos a tu carrito.";
+                } else {
+                    boton.disabled = false;
+                    boton.textContent =
+                        "Reintentar (" + agregados + " de " +
+                        faltan.length + " agregados)";
+                }
+            });
+
+            acciones.append(aviso, boton);
+        } else {
+            const completo = crear(
+                "p",
+                "",
+                "✅ Tienes todos los ingredientes."
+            );
+
+            completo.style.cssText =
+                "margin:16px 0 0;font-weight:600;color:#2f5233;";
+
+            acciones.append(completo);
+        }
 
         $("detalle-receta-extra").showModal();
     }
 
+    /* TARJETAS */
+
     function crearTarjeta(receta) {
-        const tarjeta = crear(
-            "article",
-            "extra-receta-card"
-        );
+        const tarjeta = crear("article", "extra-receta-card");
 
-        const guardada = favoritos.includes(
-            receta.id
-        );
-
-        const ver = crear(
-            "button",
-            "extra-boton",
-            "Ver receta"
-        );
+        const ver = crear("button", "extra-boton", "Ver receta");
 
         ver.type = "button";
-
-        ver.addEventListener("click", () => {
-            abrirDetalle(receta);
-        });
+        ver.addEventListener("click", () => abrirDetalle(receta));
 
         const favorito = crear(
             "button",
             "extra-boton-secundario",
-            guardada
+            esFavorita(receta.id)
                 ? "♥ Quitar favorito"
                 : "♡ Guardar receta"
         );
 
         favorito.type = "button";
+        favorito.addEventListener("click", () => cambiarFavorito(receta));
 
-        favorito.addEventListener("click", () => {
-            cambiarFavorito(receta.id);
-        });
-
-        const acciones = crear(
-            "div",
-            "extra-acciones"
-        );
+        const acciones = crear("div", "extra-acciones");
 
         acciones.append(ver, favorito);
 
+        const faltan = faltantes(receta).length;
+
         tarjeta.append(
-            crear(
-                "div",
-                "extra-receta-emoji",
-                receta.emoji
-            ),
-
-            crear(
-                "h3",
-                "",
-                receta.nombre
-            ),
-
-            crear(
-                "p",
-                "",
-                receta.descripcion
-            ),
-
+            crear("div", "extra-receta-emoji", receta.emoji || "🍽️"),
+            crear("h3", "", receta.nombre),
+            crear("p", "", receta.descripcion || ""),
+            crear("span", "extra-tiempo", "⏱ " + receta.tiempo),
             crear(
                 "span",
                 "extra-tiempo",
-                "⏱ " + receta.tiempo
+                faltan === 0
+                    ? "✅ Tienes todo"
+                    : "🛒 Te faltan " + faltan
             ),
-
             acciones
         );
 
@@ -306,38 +238,105 @@ document.addEventListener("DOMContentLoaded", () => {
         catalogo.replaceChildren();
         guardadas.replaceChildren();
 
-        recetas.forEach(receta => {
+        if (recetas.length === 0) {
             catalogo.append(
-                crearTarjeta(receta)
+                crear(
+                    "p",
+                    "extra-vacio",
+                    "Todavía no has generado recetas. " +
+                    "Toca «Generar recetas» para crear ideas " +
+                    "con lo que tienes en tu refrigerador."
+                )
             );
-        });
-
-        const lista = recetas.filter(
-            receta => favoritos.includes(receta.id)
-        );
+        } else {
+            recetas.forEach(receta => {
+                catalogo.append(crearTarjeta(receta));
+            });
+        }
 
         $("contador-favoritos").textContent =
-            lista.length +
-            (lista.length === 1
-                ? " favorita"
-                : " favoritas");
+            favoritos.length +
+            (favoritos.length === 1 ? " favorita" : " favoritas");
 
-        if (lista.length === 0) {
+        if (favoritos.length === 0) {
             guardadas.append(
                 crear(
                     "p",
                     "extra-vacio",
-                    "Todavía no tienes recetas favoritas. Guarda alguna del catálogo."
+                    "Todavía no tienes recetas favoritas. " +
+                    "Guarda alguna de las generadas."
                 )
             );
         } else {
-            lista.forEach(receta => {
-                guardadas.append(
-                    crearTarjeta(receta)
-                );
+            favoritos.forEach(receta => {
+                guardadas.append(crearTarjeta(receta));
             });
         }
     }
+
+    /* GENERAR CON IA */
+
+    async function generar() {
+        const boton = $("generar-recetas");
+        const estado = $("estado-recetas");
+
+        if (typeof apiFetch !== "function") {
+            estado.textContent =
+                "Inicia sesión para generar recetas.";
+            return;
+        }
+
+        boton.disabled = true;
+        estado.textContent =
+            "Generando recetas con lo que tienes en tu refrigerador...";
+
+        try {
+            const respuesta = await apiFetch("/recetas/generar", {
+                method: "POST"
+            });
+
+            if (!respuesta) return;
+
+            if (!respuesta.ok) {
+                let detalle = "";
+
+                try {
+                    detalle = (await respuesta.json()).detail || "";
+                } catch {
+                    /* sin detalle */
+                }
+
+                throw new Error(
+                    detalle ||
+                    "No se pudieron generar las recetas. " +
+                    "Intenta de nuevo en un momento."
+                );
+            }
+
+            const datos = await respuesta.json();
+            const nuevas = (datos.recetas || []).filter(esReceta);
+
+            if (nuevas.length === 0) {
+                estado.textContent =
+                    datos.mensaje ||
+                    "No se pudieron generar recetas esta vez.";
+                return;
+            }
+
+            recetas = nuevas;
+            guardar(CLAVE_ULTIMAS, recetas);
+            estado.textContent = "";
+            renderizar();
+
+        } catch (error) {
+            estado.textContent = error.message;
+
+        } finally {
+            boton.disabled = false;
+        }
+    }
+
+    $("generar-recetas").addEventListener("click", generar);
 
     $("cerrar-receta-extra").addEventListener(
         "click",
@@ -347,14 +346,15 @@ document.addEventListener("DOMContentLoaded", () => {
     $("detalle-receta-extra").addEventListener(
         "click",
         evento => {
-            if (
-                evento.target ===
-                $("detalle-receta-extra")
-            ) {
+            if (evento.target === $("detalle-receta-extra")) {
                 $("detalle-receta-extra").close();
             }
         }
     );
+
+    if (typeof requireAuth === "function") {
+        requireAuth();
+    }
 
     renderizar();
 

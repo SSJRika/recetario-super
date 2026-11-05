@@ -1,4 +1,3 @@
-
 (() => {
     "use strict";
 
@@ -253,37 +252,28 @@ function fechaLegible(fecha) {
         }
     ];
 
-    /* INVENTARIO LOCAL */
+    /* INVENTARIO (BACKEND) */
 
     let productos = [];
 
-    try {
-        const datos = JSON.parse(
-            localStorage.getItem(CLAVE) || "[]"
-        );
+    async function cargarProductos() {
+        if (typeof apiFetch !== "function") return;
 
-        if (Array.isArray(datos)) {
-            productos = datos.filter(
-                item =>
-                    item &&
-                    typeof item.nombre === "string" &&
-                    Number.isFinite(item.cantidad)
-            );
-        }
-    } catch (error) {
-        productos = [];
-    }
+        const respuesta = await apiFetch("/pantry/refri");
 
-    function guardar() {
-        try {
-            localStorage.setItem(
-                CLAVE,
-                JSON.stringify(productos)
-            );
-            return true;
-        } catch (error) {
-            return false;
-        }
+        if (!respuesta || !respuesta.ok) return;
+
+        const datos = await respuesta.json();
+
+        productos = datos.map(item => ({
+            id: item.id,
+            nombre: item.nombre,
+            cantidad: item.cantidad,
+            unidad: item.unidad,
+            caducidad: item.fecha_caducidad || ""
+        }));
+
+        renderizar();
     }
 
     function elemento(etiqueta, clase, texto) {
@@ -319,6 +309,212 @@ function fechaLegible(fecha) {
         inputFoto.value = "";
     }
 
+    /* DETECCIÓN POR FOTO (IA) */
+
+    function pedirFecha(id, nombre, posicion, total) {
+        return new Promise(resolve => {
+            let salida = "";
+            const dialogo = document.createElement("dialog");
+
+            dialogo.style.cssText =
+                "border:none;border-radius:14px;padding:24px;" +
+                "max-width:320px;width:90%;" +
+                "box-shadow:0 12px 40px rgba(0,0,0,.25);";
+
+            if (total > 1) {
+                const progreso = elemento(
+                    "small",
+                    "",
+                    `Producto ${posicion} de ${total}`
+                );
+
+                progreso.style.cssText =
+                    "display:block;margin-bottom:6px;color:#5c6e63;";
+
+                dialogo.append(progreso);
+            }
+
+            const titulo = elemento(
+                "h3",
+                "",
+                `¿Cuándo caduca ${nombre}?`
+            );
+
+            titulo.style.margin = "0 0 6px";
+
+            const entrada = document.createElement("input");
+
+            entrada.type = "date";
+
+            entrada.style.cssText =
+                "width:100%;padding:10px;margin:14px 0;" +
+                "border:1px solid #c2dbcb;border-radius:8px;" +
+                "font:inherit;";
+
+            const guardarFecha = elemento("button", "", "Guardar");
+            const omitir = elemento("button", "refri-link", "Omitir");
+
+            guardarFecha.type = "button";
+            omitir.type = "button";
+
+            guardarFecha.style.cssText =
+                "width:100%;padding:11px;border:none;" +
+                "border-radius:8px;background:#3f7a5d;" +
+                "color:#fff;font:inherit;font-weight:600;" +
+                "cursor:pointer;";
+
+            omitir.style.cssText =
+                "display:block;margin:10px auto 0;";
+
+            guardarFecha.addEventListener("click", async () => {
+                if (!entrada.value) return;
+
+                guardarFecha.disabled = true;
+
+                await apiFetch(`/pantry/${id}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        fecha_caducidad_manual: entrada.value
+                    })
+                });
+
+                dialogo.close();
+            });
+
+            omitir.addEventListener("click", () => dialogo.close());
+
+            dialogo.append(titulo, entrada, guardarFecha, omitir);
+
+            if (total > 1 && posicion < total) {
+                const omitirTodos = elemento(
+                    "button",
+                    "refri-link",
+                    "Omitir los demás"
+                );
+
+                omitirTodos.type = "button";
+                omitirTodos.style.cssText =
+                    "display:block;margin:6px auto 0;";
+
+                omitirTodos.addEventListener("click", () => {
+                    salida = "todos";
+                    dialogo.close();
+                });
+
+                dialogo.append(omitirTodos);
+            }
+
+            dialogo.addEventListener("close", () => {
+                dialogo.remove();
+                resolve(salida);
+            });
+
+            document.body.append(dialogo);
+            dialogo.showModal();
+        });
+    }
+
+    async function reducirImagen(archivo, maximo = 1600) {
+        try {
+            const imagen = await createImageBitmap(archivo);
+            const escala = Math.min(
+                1,
+                maximo / Math.max(imagen.width, imagen.height)
+            );
+            const lienzo = document.createElement("canvas");
+
+            lienzo.width = Math.round(imagen.width * escala);
+            lienzo.height = Math.round(imagen.height * escala);
+
+            lienzo
+                .getContext("2d")
+                .drawImage(imagen, 0, 0, lienzo.width, lienzo.height);
+
+            const blob = await new Promise(resolve =>
+                lienzo.toBlob(resolve, "image/jpeg", 0.85)
+            );
+
+            return blob || archivo;
+        } catch (error) {
+            return archivo;
+        }
+    }
+
+    async function detectarFoto(archivo) {
+        const mensaje = $("registro-mensaje");
+
+        if (typeof apiFetch !== "function") {
+            mensaje.textContent =
+                "No hay conexión con el servidor. Inicia sesión de nuevo.";
+            return;
+        }
+
+        mensaje.textContent = "Analizando foto...";
+
+        const datosForm = new FormData();
+
+        datosForm.append("file", await reducirImagen(archivo), "foto.jpg");
+
+        try {
+            const respuesta = await apiFetch("/pantry/detectar-productos", {
+                method: "POST",
+                body: datosForm
+            });
+
+            if (!respuesta || !respuesta.ok) {
+                throw new Error(
+                    "No se pudo analizar la foto. " +
+                    "Intenta de nuevo o regístralo a mano."
+                );
+            }
+
+            const datos = await respuesta.json();
+            const detectados = datos.productos || [];
+
+            limpiarFoto();
+            await cargarProductos();
+
+            if (detectados.length === 0) {
+                mensaje.textContent =
+                    "No se detectaron alimentos en la foto. " +
+                    "Prueba con otra o regístralos a mano.";
+                return;
+            }
+
+            const pendientes = detectados.filter(
+                producto => !producto.dias_vida_util
+            );
+
+            mensaje.textContent =
+                `Se detectaron ${detectados.length} producto(s)` +
+                (pendientes.length
+                    ? `. Indica la caducidad de ${pendientes.length}.`
+                    : ". Ya tienen fecha estimada.");
+
+            for (let i = 0; i < pendientes.length; i++) {
+                const resultado = await pedirFecha(
+                    pendientes[i].id,
+                    pendientes[i].nombre_detectado,
+                    i + 1,
+                    pendientes.length
+                );
+
+                if (resultado === "todos") break;
+            }
+
+            await cargarProductos();
+
+            mensaje.textContent =
+                `Se agregaron ${detectados.length} producto(s) a tu refrigerador.`;
+
+        } catch (error) {
+            mensaje.textContent = error.message;
+        }
+    }
+
     inputFoto.addEventListener("change", () => {
         if (urlFoto) {
             URL.revokeObjectURL(urlFoto);
@@ -339,10 +535,10 @@ function fechaLegible(fecha) {
 
         if (
             !tiposPermitidos.includes(archivo.type) ||
-            archivo.size > 3 * 1024 * 1024
+            archivo.size > 10 * 1024 * 1024
         ) {
             $("registro-mensaje").textContent =
-                "Usa una imagen JPG, PNG o WEBP de máximo 3 MB.";
+                "Usa una imagen JPG, PNG o WEBP de máximo 10 MB.";
 
             inputFoto.value = "";
             return;
@@ -353,8 +549,7 @@ function fechaLegible(fecha) {
         $("imagen-previa").src = urlFoto;
         $("vista-foto").hidden = false;
 
-        $("registro-mensaje").textContent =
-            "Foto seleccionada. Escribe el nombre y la cantidad.";
+        detectarFoto(archivo);
     });
 
     $("quitar-foto").addEventListener(
@@ -364,7 +559,7 @@ function fechaLegible(fecha) {
 
     /* AGREGAR ALIMENTO */
 
-    formulario.addEventListener("submit", evento => {
+    formulario.addEventListener("submit", async evento => {
         evento.preventDefault();
 
         const nombre = $("nombre-alimento").value.trim();
@@ -391,33 +586,34 @@ function fechaLegible(fecha) {
 
         if (!unidades.includes(unidad)) return;
 
-        const id =
-            typeof crypto !== "undefined" &&
-            crypto.randomUUID
-                ? crypto.randomUUID()
-                : String(Date.now()) + "-" + Math.random();
-
-
-        productos.push({
-            id,
-            nombre,
-            cantidad,
-            unidad,
-            caducidad
+        const respuesta = await apiFetch("/pantry/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nombre_detectado: nombre,
+                cantidad,
+                unidad,
+                fecha_caducidad_manual: caducidad || null
+            })
         });
 
-        const persistido = guardar();
+        if (!respuesta || !respuesta.ok) {
+            $("registro-mensaje").textContent =
+                "No se pudo guardar el alimento. Intenta de nuevo.";
+            return;
+        }
 
         formulario.reset();
         $("cantidad-alimento").value = "1";
 
         limpiarFoto();
-        renderizar();
+
+        await cargarProductos();
 
         $("registro-mensaje").textContent =
-            persistido
-                ? "Alimento agregado a tu refrigerador."
-                : "Alimento agregado temporalmente; no se pudo guardar en este navegador.";
+            "Alimento agregado a tu refrigerador.";
     });
 
     /* DIBUJAR REFRIGERADOR */
@@ -555,13 +751,15 @@ const productosVisibles = productos.filter(producto => {
                 `Quitar ${producto.nombre}`
             );
 
-            quitar.addEventListener("click", () => {
-                productos = productos.filter(
-                    item => item.id !== producto.id
+            quitar.addEventListener("click", async () => {
+                const respuesta = await apiFetch(
+                    `/pantry/${producto.id}`,
+                    { method: "DELETE" }
                 );
 
-                guardar();
-                renderizar();
+                if (respuesta && respuesta.ok) {
+                    await cargarProductos();
+                }
             });
 
           
@@ -614,15 +812,10 @@ consumido.addEventListener("click", async () => {
             );
         }
 
-        const respuesta = await apiFetch("/shopping-list/", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                nombre_producto: producto.nombre
-            })
-        });
+        const respuesta = await apiFetch(
+            `/pantry/${producto.id}/agotar`,
+            { method: "POST" }
+        );
 
         if (!respuesta || !respuesta.ok) {
             throw new Error(
@@ -630,12 +823,7 @@ consumido.addEventListener("click", async () => {
             );
         }
 
-        productos = productos.filter(
-            item => item.id !== producto.id
-        );
-
-        guardar();
-        renderizar();
+        await cargarProductos();
 
         $("registro-mensaje").textContent =
             `${producto.nombre} se agregó al carrito de compras.`;
@@ -862,6 +1050,11 @@ consumido.addEventListener("click", async () => {
 
     /* INICIAR */
 
+    if (typeof requireAuth === "function") {
+        requireAuth();
+    }
+
     renderizar();
+    cargarProductos();
 
 })();
